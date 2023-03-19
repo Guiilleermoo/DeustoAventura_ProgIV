@@ -1,0 +1,27 @@
+CODIGO;NOMBRE;DIFICULTAD;LIMITE_PER_MAX;LIMITE_PER_MIN
+0;Rocodromo;2;8;1
+1;Circuito Txiki;6;10;1
+2;KNS;4;10;1
+3;Circuito Amarillo;3;10;1
+4;Parapente;7;8;1
+5;Samurai Experience;8;8;1
+6;Tiro con Arco;2;8;1
+7;Aquaventure;3;6;1
+8;Wanka;1;6;1
+9;Forest Park;9;6;1
+10;Puenting;8;12;2
+11;Paintball ;9;12;2
+12;Barranquiismo;5;12;2
+13;Naturmaz;7;12;2
+14;Ecoparque;6;9;2
+15;Circuito Verde;3;9;2
+16;Rafting;4;9;1
+17;Water Bikers;2;9;1
+18;Circuito Rojo;4;6;1
+19;Karting;6;6;1
+20;Circuito Azul;5;12;1
+21;Circuito Naranja;7;12;1
+22;Tirolinas I;4;8;1
+23;Tirolinas II;6;8;1
+24;Tirolinas III;8;11;1
+25;Tirolinas IV;9;11;1

@@ -58,7 +58,7 @@ void FreeCsvData(){
 }
 
 // leer datos del archivo csv
-int ReadCsvData(char* csvFilePath)
+/*int ReadCsvData(char* csvFilePath)
 {
     FILE* fCsv;
     char *ptr;
@@ -69,7 +69,7 @@ int ReadCsvData(char* csvFilePath)
     if (giCsvData != NULL)
         FreeCsvData();
     // abre un archivo
-    if( fopen_s( &fCsv, csvFilePath, "r" ) != 0 )
+    if(fopen_s( &fCsv, csvFilePath, "r" ) != 0 )
     {
         printf("open file %s failed",csvFilePath);
         return -1;
@@ -103,7 +103,7 @@ int ReadCsvData(char* csvFilePath)
         fclose(fCsv);
     }
     return 1;
-}
+}*/
 
 // Muestra los datos csv leídos a través de la consola
 void  ShowCsvData()

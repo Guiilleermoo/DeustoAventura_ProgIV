@@ -2,19 +2,28 @@
  * actividad.h
  *
  *  Created on: 23 mar 2023
- *      Author: borja
+ *      Author: usuario
  */
 
-#ifndef ACTIVIDAD_ACTIVIDAD_H_
-#define ACTIVIDAD_ACTIVIDAD_H_
+#ifndef ACTIVIDA_ACTIVIDAD_H_
+#define ACTIVIDA_ACTIVIDAD_H_
+
 typedef struct{
-	int code;
-	char* nombre;
+	int codigo;
+	char* nombre_act;
 	int dificultad;
-	int personasMin;
-	int personasMax;
+	int limite_per_min;
+	int limite_per_max;
+	int edad_min;
 
 }Actividad;
-void imprimirActividad(Actividad actividad);
 
-#endif /* ACTIVIDAD_ACTIVIDAD_H_ */
+void gestionarActividades(void);
+void visualizarMenuActividades(void);
+void visualizarTodas(void);
+void visualizarCiudad(void);
+void visualizarDificultad(void);
+void anyadirActividad(void);
+void eliminarActividad(void);
+
+#endif /* ACTIVIDAD_H_ */

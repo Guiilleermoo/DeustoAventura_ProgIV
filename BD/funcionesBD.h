@@ -2,6 +2,7 @@
 #define BD_FUNCIONESBD_H_
 
 #include "../Cliente/cliente.h"
+#include "../Empleado/empleado.h"
 
 void ShowActivities();
 void ShowActivitiesInCommunity(char comunidad[]);

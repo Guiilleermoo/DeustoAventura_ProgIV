@@ -72,8 +72,6 @@ void inicioSesion(void)
 		printf("Empleado no encontrado");
 		main();
 	}*/
-	menuEmpleado();
-
 }
 
 /*void registroUsuario(void)

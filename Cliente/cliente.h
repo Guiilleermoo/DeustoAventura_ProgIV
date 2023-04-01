@@ -2,11 +2,11 @@
 #define CLIENTE_CLIENTE_H_
 
 typedef struct{
-	char dni[9];
+	char* dni;
 	char* nombre;
 	char* apellido;
 	char* mail;
-	char* telefono;
+	int telefono;
 }Cliente;
 void imprimirCliente(Cliente cliente);
 

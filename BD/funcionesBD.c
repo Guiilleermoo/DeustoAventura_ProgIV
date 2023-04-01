@@ -2,6 +2,8 @@
 #include "sqlite3.h"
 #include <string.h>
 #include "..\Empleado\empleado.h"
+#include "../Actividad/actividad.h"
+#include "../Cliente/cliente.h"
 
 sqlite3 *db;
 sqlite3_stmt *stmt;
@@ -90,6 +92,31 @@ void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, 
 
 	sqlite3_close(db);
 }*/
+
+Actividad encontrarActividad(int codActividad){
+    Actividad actividad;
+    sqlite3_open("DeustoAventura.db", &db);
+
+    char sql[] = "select * from ACTIVIDAD where COD_ACT = ?";
+
+    sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+    sqlite3_bind_int(stmt, 0, codActividad);
+
+
+    result = sqlite3_step(stmt) ;
+
+    actividad.nombre_act = (char *) sqlite3_column_text(stmt,1);
+    actividad.dificultad= (char *) sqlite3_column_text(stmt, 2);
+    actividad.limite_per_min = (int) sqlite3_column_int(stmt, 3);
+    actividad.limite_per_max = (int) sqlite3_column_int(stmt, 4);
+    actividad.edad_min = (int) sqlite3_column_int(stmt, 5);
+
+    sqlite3_finalize(stmt);
+
+    sqlite3_close(db);
+
+    return actividad;
+}
 
 //** WORKERS**//
 
@@ -199,6 +226,34 @@ void newClient(char dni[],char nombre[],char apellido[],int tfno,char correo[],c
 			sqlite3_close(db);
 
 }
+
+Cliente encontrarCliente(int codCliente)
+{
+    Cliente cliente;
+    sqlite3_open("DeustoAventura.db", &db);
+
+    char sql[] = "select * from CLIENTE where COD_CLTE = ?";
+
+    sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+    sqlite3_bind_int(stmt, 0, codCliente);
+
+
+    result = sqlite3_step(stmt) ;
+
+    cliente.dni = (char *) sqlite3_column_text(stmt,1);
+    cliente.nombre = (char *) sqlite3_column_text(stmt, 2);
+    cliente.apellido = (char *) sqlite3_column_text(stmt, 3);
+    cliente.telefono = (int) sqlite3_column_int(stmt, 4);
+    cliente.mail = (char *) sqlite3_column_text(stmt, 5);
+
+    sqlite3_finalize(stmt);
+
+    sqlite3_close(db);
+
+    return cliente;
+}
+
+
 
 //** ASSISTS **//
 

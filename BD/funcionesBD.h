@@ -1,6 +1,8 @@
 #ifndef BD_FUNCIONESBD_H_
 #define BD_FUNCIONESBD_H_
 
+#include "../Cliente/cliente.h"
+
 void ShowActivities();
 void ShowActivitiesInCommunity(char comunidad[]);
 void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, int edad_min);
@@ -17,4 +19,7 @@ void insertarParque(int cod_park,char nombre[],int horaIni,int horaFin,int capac
 void insertarProvincia(int cod_prov,char nombreProv[]);
 void ShowReservas();
 Empleado isWorker(char nombre[], char contrasena[]);
+Cliente encontrarCliente(int codCliente);
+Actividad encontrarActividad(int codActividad);
+
 #endif

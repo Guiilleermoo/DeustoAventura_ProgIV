@@ -49,7 +49,8 @@ void inicioSesion(void)
 	printf("Introduzca la contraseña\n");
 	fflush(stdout);
 	scanf(" %s", contra);
-	Empleado emp = isWorker(nombre, contra);
+
+	/*Empleado emp = isWorker(nombre, contra);
 	if(strcmp(emp.estatus, "JEFE") == 0)
 	{
 		printf("Se ha iniciado sesion como JEFE con el alias ");
@@ -70,7 +71,8 @@ void inicioSesion(void)
 	{
 		printf("Empleado no encontrado");
 		main();
-	}
+	}*/
+	menuEmpleado();
 
 }
 

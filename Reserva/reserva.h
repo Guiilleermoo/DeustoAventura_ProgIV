@@ -8,7 +8,6 @@ typedef struct{
 	int codActividad;
 	char* fecha;
 	int cantPersonas;
-	int importe;
 }Reserva;
 
 void visualizarReserva(Reserva reserva);

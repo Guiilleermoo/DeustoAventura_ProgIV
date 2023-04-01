@@ -93,7 +93,8 @@ void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, 
 	sqlite3_close(db);
 }*/
 
-Actividad encontrarActividad(int codActividad){
+Actividad findActivity(int codActividad)
+{
     Actividad actividad;
     sqlite3_open("DeustoAventura.db", &db);
 
@@ -227,7 +228,7 @@ void newClient(char dni[],char nombre[],char apellido[],int tfno,char correo[],c
 
 }
 
-Cliente encontrarCliente(int codCliente)
+Cliente findClient(int codCliente)
 {
     Cliente cliente;
     sqlite3_open("DeustoAventura.db", &db);
@@ -303,7 +304,7 @@ void newPlace(int cod_ciu,char nombre_ciu[],int cod_prov){
 
 //** PLACES **//
 
-void insertOfert(int cod_park,int cod_act,int duracion){
+void insertOffer(int cod_park,int cod_act,int duracion){
 	sqlite3_open("DeustoAventura.db", &db);
 		char sql[] = "insert into OFERTA (COD_PARK, COD_ACT, DURACION) values (?, ?, ?)";
 		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
@@ -326,7 +327,7 @@ void insertOfert(int cod_park,int cod_act,int duracion){
 
 //** RESERVES **//
 
-void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per,int importe){
+void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per){
 	sqlite3_open("DeustoAventura.db", &db);
 			char sql[] = "insert into RESERVA (COD_CLTE, COD_ACT, FECHA_RES,CANT_PER,IMPORTE) values (?, ?, ?, ?, ?)";
 			sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
@@ -335,14 +336,12 @@ void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per,int im
 			sqlite3_bind_int(stmt,1, cod_act);
 			sqlite3_bind_text(stmt,2, fecha_res,strlen(fecha_res), SQLITE_STATIC);
 			sqlite3_bind_int(stmt, 3, cant_per);
-			sqlite3_bind_int(stmt, 4, importe);
-
 
 				result = sqlite3_step(stmt);
 					if (result != SQLITE_DONE) {
 						printf("Error insertando Reserva\n");
 					}else{
-						printf("Reserva insertada - >  CodCliente: %d - CodAct: %d - Fecha de la Reserva: %s - Numero de personas: %d - Importe: %d\n", cod_cliente,cod_act,fecha_res,cant_per,importe);
+						printf("Reserva insertada - >  CodCliente: %d - CodAct: %d - Fecha de la Reserva: %s - Numero de personas: %d\n", cod_cliente,cod_act,fecha_res,cant_per);
 					}
 					sqlite3_close(db);
 }

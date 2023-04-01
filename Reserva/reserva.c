@@ -5,8 +5,8 @@
 void menuEmpleado();
 
 void visualizarReserva(Reserva reserva){
-	Cliente c= encontrarCliente(reserva.codCliente);
-	Actividad a= encontrarActividad(reserva.codActividad);
+	Cliente c= findClient(reserva.codCliente);
+	Actividad a= findActivity(reserva.codActividad);
 	printf("DNI: %s Nombre:%s Apellido: %s Telefono: %i Correo: %s Actividad: %s Numeros de personas: %i Fecha: %s:",c.dni,c.nombre,c.apellido,c.telefono, c.mail, a.nombre_act, reserva.cantPersonas, reserva.fecha);
 }
 

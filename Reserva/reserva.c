@@ -62,7 +62,7 @@ void hacerReserva()
 			int c= findClienDNI(dni);
 			Actividad a= findActivity(codActividad);
 
-			insertarReserva(c, codActividad, fecha, numPersonas);
+			newReserve(c, codActividad, fecha, numPersonas);
 
 			}else{
 				printf("Fue cancelada la reserva\n");

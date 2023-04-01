@@ -19,12 +19,12 @@ int findClienDNI(char* dni);
 void newAssist(int cod_cliente,int cod_park,char fecha_asis[]);
 void newPlace(int cod_ciu,char nombre_ciu[],int cod_prov);
 void insertOfer(int cod_park,int cod_act,int duracion);
-void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per,int importe);
+void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per);
 void ShowReserves();
 void insertPark(int cod_park,char nombre[],int horaIni,int horaFin,int capacidad,int codCiu,int codEncargado);
 void insertProvince(int cod_prov,char nombreProv[]);
 
-void DeleteReserve(int codReserva);
+void DeleteReserve(int codReserva, int codActividad);
 
 
 

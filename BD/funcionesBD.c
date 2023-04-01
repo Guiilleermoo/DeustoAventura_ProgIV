@@ -440,7 +440,7 @@ void DeleteReserve(int codcliente, int codActividad){
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
 					sqlite3_bind_int(stmt, 0, codcliente);
-					sqlite3_bind_text(stmt,1, codActividad);
+					sqlite3_bind_int(stmt,1, codActividad);
 
 					result = sqlite3_step(stmt);
 						if (result != SQLITE_DONE) {

@@ -2,12 +2,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Reserva/reserva.h"
 #include "Actividad/actividad.h"
 #include "Empleado/empleado.h"
+#include "BD/funcionesBD.h"
 
 void inicioSesion();
-void registroUsuario();
 void menuEmpleado();
 void menuJefe();
 
@@ -20,8 +21,6 @@ int main(void)
 
 	printf("Gestion de actividades DeustoAventura\n");
 	printf("1. Iniciar sesion\n");
-	printf("2. Registro de usuario\n");
-	printf("3. JEFE\n");
 	printf("0. Salir\n");
 	fflush(stdout);
 	int a;
@@ -32,10 +31,6 @@ int main(void)
     fflush(stdout);
     if (a == 1) {
 		inicioSesion();
-	} else if (a == 2) {
-		registroUsuario();
-	} else if (a == 3) {
-		menuJefe();
 	} else if (a == 0) {
 		printf("FIN");
 		exit (-1);
@@ -54,11 +49,32 @@ void inicioSesion(void)
 	printf("Introduzca la contraseña\n");
 	fflush(stdout);
 	scanf(" %s", contra);
-	printf("Se ha iniciado sesion con el alias ");
-	puts(nombre);
+	Empleado emp = isWorker(nombre, contra);
+	if(strcmp(emp.estatus, "JEFE") == 0)
+	{
+		printf("Se ha iniciado sesion como JEFE con el alias ");
+		puts(nombre);
+
+		printf("\n");
+
+		menuJefe();
+	} else if(strcmp(emp.estatus, "EMPLEADO") == 1)
+	{
+		printf("Se ha iniciado sesion como EMPLEADO con el alias ");
+		puts(nombre);
+
+		printf("\n");
+
+		menuEmpleado();
+	} else
+	{
+		printf("Empleado no encontrado");
+		main();
+	}
+
 }
 
-void registroUsuario(void)
+/*void registroUsuario(void)
 {
     char dni[9], nombre[20], apellido[20], usuario[20], contra[20], correo[20], telefono[9];
     printf("Registro de usuario\n");
@@ -83,7 +99,7 @@ void registroUsuario(void)
     printf("Introduzca el numero de telefono\n");
     fflush(stdout);
     scanf(" %s", telefono);
-}
+}*/
 
 void menuEmpleado()
 {
@@ -91,6 +107,7 @@ void menuEmpleado()
     printf("1. Hacer una reserva\n");
     printf("2. Cancelar una reserva\n");
     printf("3. Visualizar una reserva\n");
+    printf("4. Visualizar actividades\n");
     printf("0. Salir\n");
     fflush(stdout);
     int a;
@@ -106,7 +123,10 @@ void menuEmpleado()
      } else if (a == 3)
      {
     		 //visualizarReservas();
-     }else if (a == 0)
+     } else if (a == 4)
+     {
+    	 visualizarMenuActividades();
+     } else if (a == 0)
      {
 
      }

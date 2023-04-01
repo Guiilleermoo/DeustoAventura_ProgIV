@@ -13,12 +13,11 @@ typedef struct{
 	char* DNI;
 	char* nombre;
 	char* apellido;
-	char* tfno;
+	int tfno;
 	char* correo;
 	char* contrasena;
 	char* estatus;
-	char* cod_park;
-
+	int cod_park;
 }Empleado;
 
 

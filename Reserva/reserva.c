@@ -13,7 +13,10 @@ void visualizarReserva(Reserva reserva){
 void hacerReserva()
 {
 	 char dni[9], nombre[20], apellido[20], correo[20], telefono[9],confirmar;
-	 int numPersonas,dia,mes,ano,hora;
+	 int numPersonas;
+	 char* fecha;
+	 int codActividad;
+	 char* comunidad;
 		printf("Hacer Reserva\n");
 	   	printf("Introduzca el DNI\n");
 	   	fflush(stdout);
@@ -30,23 +33,40 @@ void hacerReserva()
 	   	printf("Introduzca el correo\n");
 	   	fflush(stdout);
 	   	scanf(" %s", correo);
-	   	printf("Intoduza la actividad que desea realizar\n");
+
+
 	   	// falta por hacer
-	   	printf("Introduzca la localidad donde desea realizar la actividad:\n");
-	  	// falta por hacer
+	   	printf("Introduzca la comunidad donde desea realizar la actividad:\n");
+		fflush(stdout);
+		scanf(" %s", comunidad);
+	 	printf("Actividades que peudes realizar\n");
+		   	ShowActivitiesInCommunity(comunidad);
+		printf("Inserte el codigo de la actividad que deseas realizar:\n ");
+		fflush(stdout);
+		   	scanf(" %d", &codActividad);
+
+
 	   	printf("Introduza el numero de personas que van a realizar la activiad:\n");
 	   	fflush(stdout);
 	   	scanf(" %i", &numPersonas);
-	   	printf("Introduza el dia que desea realizar la actividad(DD MM AAAA):\n");
+	   	printf("Introduza la fecha en la que quires realizar la actividad(DD MM AAAA):\n");
 	   	fflush(stdout);
-	   	scanf("%d %d %d",&dia,&mes,&ano);
-		printf("Introduza a al hora que desea realizar al actividada:\n");
-		fflush(stdout);
-		scanf("%i",&hora);
+	   	scanf("%s",&fecha);
+
 		printf("Confirmar reservas(S/N):\n");
 		fflush(stdout);
 		scanf("%c", &confirmar);
 		//LAMAR FUNCION QUE METE LA RESERVA
+
+		if(confirmar=='S'){
+			int c= findClienDNI(dni);
+			Actividad a= findActivity(codActividad);
+
+			insertarReserva(c, codActividad, fecha, numPersonas);
+
+			}else{
+				printf("Fue cancelada la reserva\n");
+			}
 		menuEmpleado();
 
 }
@@ -62,6 +82,13 @@ void cancelarReserva()
 	printf("Confirmar cancelacion de reserva(S/N):\n");
 	fflush(stdout);
 	scanf("%c", &confirmar);
-	//LLAMAR A LA FUNCION QUE CANCELE LA RESERVA
+	if(confirmar=='S'){
+
+		//llamar a funcion eliminar reserva por codigo
+
+		}else{
+			printf("La reserva no ha sido eliminada\n");
+		}
+
 	menuEmpleado();
 }

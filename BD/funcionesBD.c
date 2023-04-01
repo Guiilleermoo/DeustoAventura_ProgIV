@@ -38,7 +38,7 @@ void ShowActivitiesInCommunity(char comunidad[])
 {
 	sqlite3_open("DeustoAventura.db", &db);
 
-	char sql[] = "select NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX, EDAD_MIN"
+	char sql[] = "select NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX, EDAD_MIN, COD_ACT"
 			"from ACTIVIDAD A, PARQUE P, LUGAR L, OFERTA O"
 			"where A.COD_ACT = O.COD_ACT and O.COD_PARK = P.COD_PARK and P.COD_CIU = L.COD_CIU and NOMBRE_CIU = ?";
 
@@ -51,7 +51,7 @@ void ShowActivitiesInCommunity(char comunidad[])
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			printf("Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (char*) sqlite3_column_text(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (int) sqlite3_column_text(stmt, 2), (int) sqlite3_column_text(stmt, 3), (int) sqlite3_column_text(stmt, 4));
+			printf("Cod Act: %d Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (int) sqlite3_column_int(stmt, 5), (char*) sqlite3_column_text(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (int) sqlite3_column_text(stmt, 2), (int) sqlite3_column_text(stmt, 3), (int) sqlite3_column_text(stmt, 4));
 		}
 	} while (result == SQLITE_ROW);
 	printf("\n");
@@ -253,7 +253,28 @@ Cliente findClient(int codCliente)
 
     return cliente;
 }
+int findClienDNI(char* dni){
+	int cliente;
+	    sqlite3_open("DeustoAventura.db", &db);
 
+	    char sql[] = "select * from CLIENTE where DNI = ?";
+
+	    sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	    sqlite3_bind_int(stmt, 0, dni);
+
+
+	    result = sqlite3_step(stmt) ;
+
+
+	    cliente = (int) sqlite3_column_int(stmt, 0);
+
+
+	    sqlite3_finalize(stmt);
+
+	    sqlite3_close(db);
+
+	    return cliente;
+}
 
 
 //** ASSISTS **//

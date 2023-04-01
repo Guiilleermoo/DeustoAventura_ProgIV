@@ -74,18 +74,23 @@ void hacerReserva()
 void cancelarReserva()
 {
 	char confirmar;
-	int num;
+	int idcliente;
+	int idactividad;
 	printf("Cancelar Reserva\n\n");
-	printf("1.¿Que reserva desea cancelar?(Intoducir el numero de la resrva)");
+	void ShowReserves();
+	printf("1.¿Id del cliente que quiere cancelar la reserva?\n");
 	fflush(stdout);
-	scanf("%d",&num);
+	scanf("%d",&idcliente);
+	printf("2.¿Id del actividad que quiere cancelar la reserva?\n");
+	fflush(stdout);
+	scanf("%d",&idactividad);
 	printf("Confirmar cancelacion de reserva(S/N):\n");
 	fflush(stdout);
 	scanf("%c", &confirmar);
 	if(confirmar=='S'){
 
 		//llamar a funcion eliminar reserva por codigo
-
+		DeleteReserve(idcliente, idactividad);
 		}else{
 			printf("La reserva no ha sido eliminada\n");
 		}

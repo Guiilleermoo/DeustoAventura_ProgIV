@@ -434,3 +434,20 @@ void insertProvince(int cod_prov,char nombreProv[]){
 						}
 						sqlite3_close(db);
 }
+void DeleteReserve(int codcliente, int codActividad){
+	sqlite3_open("DeustoAventura.db", &db);
+	char sql[] = "delete from RESERVA where  COD_CLTE= ? and COD_ACT= ?";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+
+					sqlite3_bind_int(stmt, 0, codcliente);
+					sqlite3_bind_text(stmt,1, codActividad);
+
+					result = sqlite3_step(stmt);
+						if (result != SQLITE_DONE) {
+							printf("Error eliminando la reserva\n");
+						}else{
+							printf("La reserva ha sido eliminada\n");
+						}
+
+	sqlite3_close(db);
+}

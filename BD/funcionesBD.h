@@ -24,7 +24,7 @@ void ShowReserves();
 void insertPark(int cod_park,char nombre[],int horaIni,int horaFin,int capacidad,int codCiu,int codEncargado);
 void insertProvince(int cod_prov,char nombreProv[]);
 
-// void DeleteRever();
+void DeleteReserve(int codReserva);
 
 
 

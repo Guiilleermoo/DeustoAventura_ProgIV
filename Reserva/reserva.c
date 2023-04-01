@@ -1,20 +1,14 @@
-/*
- * reserva.c
- *
- *  Created on: 23 mar 2023
- *      Author: borja
- */
 #include "reserva.h"
 #include <stdio.h>
 
+void menuEmpleado();
 
 void visualizarReserva(Reserva reserva){
-
-
 	printf("DNI: Nombre: Apellido: Telefono: Correo: Actividad: Numeros de personas: Dia: Mes: Año: Hora:");
 }
-void hacerReserva(){
 
+void hacerReserva()
+{
 	 char dni[9], nombre[20], apellido[20], correo[20], telefono[9],confirmar;
 	 int numPersonas,dia,mes,ano,hora;
 		printf("Hacer Reserva\n");
@@ -45,16 +39,17 @@ void hacerReserva(){
 	   	scanf("%d %d %d",&dia,&mes,&ano);
 		printf("Introduza a al hora que desea realizar al actividada:\n");
 		fflush(stdout);
-		scanf("%d %d %d",&hora);
+		scanf("%i",&hora);
 		printf("Confirmar reservas(S/N):\n");
 		fflush(stdout);
-		scanf("%c",confirmar);
+		scanf("%c", &confirmar);
 		//LAMAR FUNCION QUE METE LA RESERVA
-		 menuEmpleado();
+		menuEmpleado();
 
 }
 
-void cancelarReserva(){
+void cancelarReserva()
+{
 	char confirmar;
 	int num;
 	printf("Cancelar Reserva\n\n");
@@ -63,7 +58,7 @@ void cancelarReserva(){
 	scanf("%d",&num);
 	printf("Confirmar cancelacion de reserva(S/N):\n");
 	fflush(stdout);
-	scanf("%c",confirmar);
+	scanf("%c", &confirmar);
 	//LLAMAR A LA FUNCION QUE CANCELE LA RESERVA
-	 menuEmpleado();
+	menuEmpleado();
 }

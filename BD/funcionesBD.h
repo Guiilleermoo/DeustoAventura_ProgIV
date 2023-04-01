@@ -9,4 +9,4 @@ void ShowWorkers();
 void InsertWorker(char dni[], char nombre[], char apellido[], int telefono, char correo[], char contrasena[],char estatus[]);
 //void DeleteWorker();
 
-#endif /* BD_FUNCIONESBD_H_ */
+#endif

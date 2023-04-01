@@ -1,17 +1,10 @@
-/*
- * actividad.h
- *
- *  Created on: 23 mar 2023
- *      Author: usuario
- */
-
 #ifndef ACTIVIDA_ACTIVIDAD_H_
 #define ACTIVIDA_ACTIVIDAD_H_
 
 typedef struct{
 	int codigo;
 	char* nombre_act;
-	int dificultad;
+	char* dificultad;
 	int limite_per_min;
 	int limite_per_max;
 	int edad_min;
@@ -26,4 +19,4 @@ void visualizarDificultad(void);
 void anyadirActividad(void);
 void eliminarActividad(void);
 
-#endif /* ACTIVIDAD_H_ */
+#endif

@@ -22,10 +22,10 @@ typedef struct{
 }Empleado;
 
 
-void gestionarEmpleados(void);
-void visualizarEmpleados(void);
-void anyadirEmpleados(void);
-void eliminarEmpleado(void);
+void gestionarEmpleados();
+void visualizarEmpleados();
+void anyadirEmpleado();
+void eliminarEmpleado();
 
 
 #endif /* EMPLEADO_H_ */

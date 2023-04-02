@@ -53,8 +53,8 @@ void inicioSesion(void)
 
 
 	Empleado emp = isWorker(nombre, contra);
-	printf("%s ",emp.estatus);
-	if(strcmp(emp.estatus, "JEFE") == 0)
+	puts(emp.estatus);
+	if(strcmp(emp.estatus, "JEFE") == 1)
 	{
 		printf("Se ha iniciado sesion como JEFE con el alias ");
 		puts(nombre);
@@ -62,7 +62,7 @@ void inicioSesion(void)
 		printf("\n");
 
 		menuJefe();
-	} else if(strcmp(emp.estatus, "EMPLEADO") == 1){
+	} else if(strcmp(emp.estatus, "EMPLEADO") == 0){
 		printf("Se ha iniciado sesion como EMPLEADO con el alias ");
 		puts(nombre);
 

@@ -192,7 +192,7 @@ Empleado isWorker(char nombre[], char contrasena[]){
     emp.contrasena = (char*) sqlite3_column_text(stmt, 6);
     emp.estatus = (char*) sqlite3_column_text(stmt, 7);
     emp.cod_park = (int) sqlite3_column_text(stmt, 8);
-    printf("%s",emp.estatus);
+    printf("%s\n",emp.estatus);
     sqlite3_finalize(stmt);
 
     sqlite3_close(db);

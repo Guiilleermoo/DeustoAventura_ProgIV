@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "sqlite3.h"
 #include <string.h>
-#include "..\Empleado\empleado.h"
+#include "../Empleado/empleado.h"
 #include "../Actividad/actividad.h"
 #include "../Cliente/cliente.h"
 
@@ -144,12 +144,12 @@ void ShowWorkers()
 	sqlite3_close(db);
 }
 
-void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* correo, char *contrasena,char* estatus)
+void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* correo, char *contrasena,char* estatus, int cod_park)
 {
-
+	printf("1");
 	sqlite3_open("BD/DeustoAventura.db", &db);
 
-	char sql[] = "insert into EMPLEADO (DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO, CONTRASENA, ESTATUS) values (?, ?, ?, ?, ?, ?, ?)";
+	char sql[] = "insert into EMPLEADO (COD_EMP, DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO, CONTRASENA, ESTATUS, COD_PARK) values (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
@@ -159,13 +159,16 @@ void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* c
 	sqlite3_bind_int(stmt,4, telefono);
 	sqlite3_bind_text(stmt, 5, correo, strlen(correo), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 6, estatus, strlen(estatus), SQLITE_STATIC);
+	sqlite3_bind_int(stmt, 7, cod_park);
 
 	result = sqlite3_step(stmt);
+
 	if (result != SQLITE_DONE) {
 		printf("Error insertando el empleado\n");
 	}else{
-		printf("Empleado insertado - >  DNI: %s - Nombre Y Apellido: %s %s - TFNO: %i - Correo: %s - Estatus: %s\n", dni, nombre, apellido, telefono, correo, estatus);
+		printf("Empleado insertado - >  DNI: %s - Nombre Y Apellido: %s %s - TFNO: %i - Correo: %s - Estatus: %s - Codigo Parque: %i\n", dni, nombre, apellido, telefono, correo, estatus, cod_park);
 	}
+
 	sqlite3_finalize(stmt);
 	sqlite3_close(db);
 }
@@ -181,7 +184,7 @@ void isWorker(char nombre[], char contrasena[]){
     sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, contrasena, strlen(contrasena), SQLITE_STATIC);
 
-    result = sqlite3_step(stmt) ;
+    result = sqlite3_step(stmt);
 
 
     emp.DNI = (char*) sqlite3_column_text(stmt, 1);
@@ -210,7 +213,7 @@ void isWorker(char nombre[], char contrasena[]){
     		printf("\n");
 
     		menuEmpleado();
-    	} else{
+    	} else {
     		printf("Empleado no encontrado");
     		main();
     	}

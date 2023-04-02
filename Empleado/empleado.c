@@ -50,8 +50,8 @@ void visualizarEmpleados(void)
 
 void anyadirEmpleado()
 {
-
 	char dni[9], nombre[20], apellido[20], contra[20], correo[20], telefono[9], status[20];
+	int cod_park;
     printf("Añadir empleado\n");
     printf("DNI\n");
     fflush(stdout);
@@ -71,12 +71,14 @@ void anyadirEmpleado()
     printf("Introduzca el numero de telefono\n");
     fflush(stdout);
     scanf(" %s", telefono);
-    printf("Introduzca el  estatus (JEFE/EMPLEADO)\n");
+    printf("Introduzca el estatus (JEFE/EMPLEADO)\n");
     fflush(stdout);
     scanf(" %s", status);
+    printf("Introduzca el codigo de parque\n");
+    fflush(stdout);
+    scanf(" %i", cod_park);
 
-
-    InsertWorker(dni, nombre, apellido, telefono, correo, contra, status);
+    InsertWorker(dni, nombre, apellido, telefono, correo, contra, status, cod_park);
     printf("El empleado ha sido añadido");
     gestionarEmpleados();
 }

@@ -3,6 +3,7 @@
 
 #include "../Cliente/cliente.h"
 #include "../Empleado/empleado.h"
+#include "../Actividad/actividad.h"
 
 void ShowActivities();
 void ShowActivitiesInCommunity(char comunidad[]);

@@ -1,5 +1,6 @@
 #include "empleado.h"
 #include <stdio.h>
+#include "../BD/funcionesBD.h"
 
 void gestionarEmpleados()
 {
@@ -50,36 +51,43 @@ void visualizarEmpleados(void)
 
 void anyadirEmpleado()
 {
-	char dni[9], nombre[20], apellido[20], contra[20], correo[20], telefono[9], status[20];
+	char dni[10];
+	char nombre[10];
+	char apellido[10];
+	int tfno;
+	char correo[10];
+	char contra[10];
+	char estatus[10];
 	int cod_park;
-    printf("Añadir empleado\n");
-    printf("DNI\n");
-    fflush(stdout);
-    scanf(" %s", dni);
-    printf("Nombre\n");
-    fflush(stdout);
-    scanf(" %s", nombre);
-    printf("Apellido\n");
-    fflush(stdout);
-    scanf(" %s", apellido);
-    printf("Email\n");
-    fflush(stdout);
-    scanf(" %s", correo);
-    printf("Introduzca la contraseña\n");
-    fflush(stdout);
-    scanf(" %s", contra);
-    printf("Introduzca el numero de telefono\n");
-    fflush(stdout);
-    scanf(" %s", telefono);
-    printf("Introduzca el estatus (JEFE/EMPLEADO)\n");
-    fflush(stdout);
-    scanf(" %s", status);
-    printf("Introduzca el codigo de parque\n");
-    fflush(stdout);
-    scanf(" %i", cod_park);
 
-    InsertWorker(dni, nombre, apellido, telefono, correo, contra, status, cod_park);
-    printf("El empleado ha sido añadido");
+	printf("Añadir empleado\n");
+	printf("DNI\n");
+	fflush(stdout);
+	scanf(" %s", dni);
+	printf("Nombre\n");
+	fflush(stdout);
+	scanf(" %s", nombre);
+	printf("Apellido\n");
+	fflush(stdout);
+	scanf(" %s", apellido);
+	printf("Email\n");
+	fflush(stdout);
+	scanf(" %s", correo);
+	printf("Introduzca la contraseña\n");
+	fflush(stdout);
+	scanf(" %s", contra);
+	printf("Introduzca el numero de telefono\n");
+	fflush(stdout);
+	scanf(" %i", &tfno);
+	printf("Introduzca el estatus (JEFE/EMPLEADO)\n");
+	fflush(stdout);
+	scanf(" %s", estatus);
+	printf("Introduzca el codigo de parque\n");
+	fflush(stdout);
+	scanf(" %i", &cod_park);
+
+	InsertWorker(dni, nombre, apellido, tfno, correo, contra, estatus, cod_park);
+
     gestionarEmpleados();
 }
 

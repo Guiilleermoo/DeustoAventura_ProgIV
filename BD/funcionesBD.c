@@ -13,7 +13,7 @@ int result;
 
 void ShowActivities()
 {
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 
 	char sql[] = "select * from ACTIVIDAD";
 
@@ -36,7 +36,7 @@ void ShowActivities()
 
 void ShowActivitiesInCommunity(char comunidad[])
 {
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 
 	char sql[] = "select NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX, EDAD_MIN, COD_ACT"
 			"from ACTIVIDAD A, PARQUE P, LUGAR L, OFERTA O"
@@ -63,7 +63,7 @@ void ShowActivitiesInCommunity(char comunidad[])
 
 void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, int edad_min)
 {
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 
 	char sql[] = "insert into ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX, EDAD_MIN) values (?, ?, ?, ?, ?)";
 
@@ -96,7 +96,7 @@ void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, 
 Actividad findActivity(int codActividad)
 {
     Actividad actividad;
-    sqlite3_open("DeustoAventura.db", &db);
+    sqlite3_open("BD/DeustoAventura.db", &db);
 
     char sql[] = "select * from ACTIVIDAD where COD_ACT = ?";
 
@@ -123,7 +123,7 @@ Actividad findActivity(int codActividad)
 
 void ShowWorkers()
 {
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 
 	char sql[] = "select * from EMPLEADO";
 
@@ -144,9 +144,10 @@ void ShowWorkers()
 	sqlite3_close(db);
 }
 
-void InsertWorker(char dni[], char nombre[], char apellido[], int telefono, char correo[], char contrasena[],char estatus[])
+void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* correo, char *contrasena,char* estatus)
 {
-	sqlite3_open("DeustoAventura.db", &db);
+
+	sqlite3_open("BD/DeustoAventura.db", &db);
 
 	char sql[] = "insert into EMPLEADO (DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO, CONTRASENA, ESTATUS) values (?, ?, ?, ?, ?, ?, ?)";
 
@@ -155,7 +156,7 @@ void InsertWorker(char dni[], char nombre[], char apellido[], int telefono, char
 	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 2, nombre, strlen(nombre), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 3, apellido, strlen(apellido), SQLITE_STATIC);
-	sqlite3_bind_int(stmt, 4, telefono);
+	sqlite3_bind_int(stmt,4, telefono);
 	sqlite3_bind_text(stmt, 5, correo, strlen(correo), SQLITE_STATIC);
 	sqlite3_bind_text(stmt, 6, estatus, strlen(estatus), SQLITE_STATIC);
 
@@ -165,13 +166,14 @@ void InsertWorker(char dni[], char nombre[], char apellido[], int telefono, char
 	}else{
 		printf("Empleado insertado - >  DNI: %s - Nombre Y Apellido: %s %s - TFNO: %i - Correo: %s - Estatus: %s\n", dni, nombre, apellido, telefono, correo, estatus);
 	}
-
+	sqlite3_finalize(stmt);
 	sqlite3_close(db);
 }
 
 Empleado isWorker(char nombre[], char contrasena[]){
     Empleado emp;
-    sqlite3_open("DeustoAventura.db", &db);
+
+    sqlite3_open("BD/DeustoAventura.db", &db);
 
     char sql[] = "select * from EMPLEADO where NOMBRE_EMP = ? and CONTRASENA = ?";
 
@@ -181,6 +183,7 @@ Empleado isWorker(char nombre[], char contrasena[]){
 
     result = sqlite3_step(stmt) ;
 
+
     emp.DNI = (char*) sqlite3_column_text(stmt, 1);
     emp.nombre = (char*) sqlite3_column_text(stmt, 2);
     emp.apellido = (char*) sqlite3_column_text(stmt, 3);
@@ -189,7 +192,7 @@ Empleado isWorker(char nombre[], char contrasena[]){
     emp.contrasena = (char*) sqlite3_column_text(stmt, 6);
     emp.estatus = (char*) sqlite3_column_text(stmt, 7);
     emp.cod_park = (int) sqlite3_column_text(stmt, 8);
-
+    printf("%s",emp.estatus);
     sqlite3_finalize(stmt);
 
     sqlite3_close(db);
@@ -205,17 +208,17 @@ Empleado isWorker(char nombre[], char contrasena[]){
 //** CLIENTS **//
 
 void newClient(char dni[],char nombre[],char apellido[],int tfno,char correo[],char contrasena[],int cod_ciu){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 	char sql[] = "insert into CLIENTE (DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO, CONTRASENA, COD_CIU) values (?, ?, ?, ?, ?, ?, ?)";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-		sqlite3_bind_text(stmt, 0, dni, strlen(dni), SQLITE_STATIC);
-		sqlite3_bind_text(stmt,1, nombre, strlen(nombre), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 2, apellido, strlen(apellido), SQLITE_STATIC);
-		sqlite3_bind_int(stmt, 3, tfno);
-		sqlite3_bind_text(stmt, 4, correo, strlen(correo), SQLITE_STATIC);
-		sqlite3_bind_text(stmt, 5, contrasena, strlen(contrasena), SQLITE_STATIC);
-		sqlite3_bind_int(stmt, 6, cod_ciu);
+		sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
+		sqlite3_bind_text(stmt,2, nombre, strlen(nombre), SQLITE_STATIC);
+		sqlite3_bind_text(stmt,3, apellido, strlen(apellido), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 4, tfno);
+		sqlite3_bind_text(stmt, 5, correo, strlen(correo), SQLITE_STATIC);
+		sqlite3_bind_text(stmt, 6, contrasena, strlen(contrasena), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 7, cod_ciu);
 
 		result = sqlite3_step(stmt);
 			if (result != SQLITE_DONE) {
@@ -231,12 +234,12 @@ void newClient(char dni[],char nombre[],char apellido[],int tfno,char correo[],c
 Cliente findClient(int codCliente)
 {
     Cliente cliente;
-    sqlite3_open("DeustoAventura.db", &db);
+    sqlite3_open("BD/DeustoAventura.db", &db);
 
     char sql[] = "select * from CLIENTE where COD_CLTE = ?";
 
     sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
-    sqlite3_bind_int(stmt, 0, codCliente);
+    sqlite3_bind_int(stmt, 1, codCliente);
 
 
     result = sqlite3_step(stmt) ;
@@ -255,12 +258,12 @@ Cliente findClient(int codCliente)
 }
 int findClienDNI(char* dni){
 	int cliente;
-	    sqlite3_open("DeustoAventura.db", &db);
+	    sqlite3_open("BD/DeustoAventura.db", &db);
 
 	    char sql[] = "select * from CLIENTE where DNI = ?";
 
 	    sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
-	    sqlite3_bind_int(stmt, 0, dni);
+	    sqlite3_bind_int(stmt, 1, dni);
 
 
 	    result = sqlite3_step(stmt) ;
@@ -280,13 +283,13 @@ int findClienDNI(char* dni){
 //** ASSISTS **//
 
 void newAssist(int cod_cliente,int cod_park,char fecha_asis[]){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 	char sql[] = "insert into ASISTIR (COD_CLTE, COD_PARK, FECHA_ASIS) values (?, ?, ?)";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-		sqlite3_bind_int(stmt, 0, cod_cliente);
-		sqlite3_bind_int(stmt,1, cod_park);
-		sqlite3_bind_text(stmt, 2, fecha_asis,strlen(fecha_asis), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 1, cod_cliente);
+		sqlite3_bind_int(stmt,2, cod_park);
+		sqlite3_bind_text(stmt, 3, fecha_asis,strlen(fecha_asis), SQLITE_STATIC);
 
 
 		result = sqlite3_step(stmt);
@@ -303,12 +306,12 @@ void newAssist(int cod_cliente,int cod_park,char fecha_asis[]){
 //** PLACES **//
 
 void newPlace(int cod_ciu,char nombre_ciu[],int cod_prov){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 		char sql[] = "insert into LUGAR (COD_CIU, NOMBRE_CIU, COD_PROV) values (?, ?, ?)";
 		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-		sqlite3_bind_int(stmt, 0, cod_ciu);
-		sqlite3_bind_text(stmt,1, nombre_ciu,strlen(nombre_ciu), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 1, cod_ciu);
+		sqlite3_bind_text(stmt,2, nombre_ciu,strlen(nombre_ciu), SQLITE_STATIC);
 		sqlite3_bind_int(stmt, 3, cod_prov);
 
 
@@ -326,12 +329,12 @@ void newPlace(int cod_ciu,char nombre_ciu[],int cod_prov){
 //** PLACES **//
 
 void insertOffer(int cod_park,int cod_act,int duracion){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 		char sql[] = "insert into OFERTA (COD_PARK, COD_ACT, DURACION) values (?, ?, ?)";
 		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-		sqlite3_bind_int(stmt, 0, cod_park);
-		sqlite3_bind_int(stmt,1, cod_act);
+		sqlite3_bind_int(stmt, 1, cod_park);
+		sqlite3_bind_int(stmt,2, cod_act);
 		sqlite3_bind_int(stmt, 3, duracion);
 
 
@@ -349,14 +352,14 @@ void insertOffer(int cod_park,int cod_act,int duracion){
 //** RESERVES **//
 
 void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 			char sql[] = "insert into RESERVA (COD_CLTE, COD_ACT, FECHA_RES,CANT_PER,IMPORTE) values (?, ?, ?, ?, ?)";
 			sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-			sqlite3_bind_int(stmt, 0, cod_cliente);
-			sqlite3_bind_int(stmt,1, cod_act);
-			sqlite3_bind_text(stmt,2, fecha_res,strlen(fecha_res), SQLITE_STATIC);
-			sqlite3_bind_int(stmt, 3, cant_per);
+			sqlite3_bind_int(stmt, 1, cod_cliente);
+			sqlite3_bind_int(stmt,2, cod_act);
+			sqlite3_bind_text(stmt,3, fecha_res,strlen(fecha_res), SQLITE_STATIC);
+			sqlite3_bind_int(stmt, 4, cant_per);
 
 				result = sqlite3_step(stmt);
 					if (result != SQLITE_DONE) {
@@ -369,7 +372,7 @@ void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per){
 
 void ShowReserves()
 {
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 
 	char sql[] = "select * from RESERVA";
 
@@ -393,17 +396,17 @@ void ShowReserves()
 //** PARKS **//
 
 void insertPark(int cod_park,char nombre[],int horaIni,int horaFin,int capacidad,int codCiu,int codEncargado){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 			char sql[] = "insert into PARQUE (COD_PARK, NOMBRE_PARK, HORA_INI, HORA_FIN, CAPACIDAD, COD_CIU, ENCARGADO) values (?, ?, ?, ?, ?, ?, ?)";
 			sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-			sqlite3_bind_int(stmt, 0, cod_park);
-			sqlite3_bind_text(stmt,1, nombre,strlen(nombre), SQLITE_STATIC);
-			sqlite3_bind_int(stmt,2, horaIni);
-			sqlite3_bind_int(stmt,3, horaFin);
-			sqlite3_bind_int(stmt, 4, capacidad);
-			sqlite3_bind_int(stmt, 5, codCiu);
-			sqlite3_bind_int(stmt, 5, codEncargado);
+			sqlite3_bind_int(stmt, 1, cod_park);
+			sqlite3_bind_text(stmt,2, nombre,strlen(nombre), SQLITE_STATIC);
+			sqlite3_bind_int(stmt,3, horaIni);
+			sqlite3_bind_int(stmt,4, horaFin);
+			sqlite3_bind_int(stmt, 5, capacidad);
+			sqlite3_bind_int(stmt, 6, codCiu);
+			sqlite3_bind_int(stmt, 7, codEncargado);
 
 
 				result = sqlite3_step(stmt);
@@ -418,12 +421,12 @@ void insertPark(int cod_park,char nombre[],int horaIni,int horaFin,int capacidad
 //** PROVINCIES **//
 
 void insertProvince(int cod_prov,char nombreProv[]){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 				char sql[] = "insert into PROVINCIA (COD_PROV, NOMBRE_PROV) values (?, ?)";
 				sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-				sqlite3_bind_int(stmt, 0, cod_prov);
-				sqlite3_bind_text(stmt,1, nombreProv,strlen(nombreProv), SQLITE_STATIC);
+				sqlite3_bind_int(stmt, 1, cod_prov);
+				sqlite3_bind_text(stmt,2, nombreProv,strlen(nombreProv), SQLITE_STATIC);
 
 
 					result = sqlite3_step(stmt);
@@ -435,12 +438,12 @@ void insertProvince(int cod_prov,char nombreProv[]){
 						sqlite3_close(db);
 }
 void DeleteReserve(int codcliente, int codActividad){
-	sqlite3_open("DeustoAventura.db", &db);
+	sqlite3_open("BD/DeustoAventura.db", &db);
 	char sql[] = "delete from RESERVA where  COD_CLTE= ? and COD_ACT= ?";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-					sqlite3_bind_int(stmt, 0, codcliente);
-					sqlite3_bind_int(stmt,1, codActividad);
+					sqlite3_bind_int(stmt, 1, codcliente);
+					sqlite3_bind_int(stmt,2, codActividad);
 
 					result = sqlite3_step(stmt);
 						if (result != SQLITE_DONE) {

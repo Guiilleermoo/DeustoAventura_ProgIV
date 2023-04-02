@@ -27,7 +27,7 @@ int main(void)
 
 
 	scanf(" %d", &a);
-	printf("Se leyó el caracter: %d\n", a);
+	//printf("Se leyó el caracter: %d\n", a);
     fflush(stdout);
     if (a == 1) {
 		inicioSesion();
@@ -43,6 +43,7 @@ void inicioSesion(void)
 {
     char nombre[20], contra[20];
     printf("Inicio de sesion\n");
+
     printf("Introduzca el usuario\n");
 	fflush(stdout);
 	scanf(" %s", nombre);
@@ -50,7 +51,9 @@ void inicioSesion(void)
 	fflush(stdout);
 	scanf(" %s", contra);
 
-	/*Empleado emp = isWorker(nombre, contra);
+
+	Empleado emp = isWorker(nombre, contra);
+	printf("%s ",emp.estatus);
 	if(strcmp(emp.estatus, "JEFE") == 0)
 	{
 		printf("Se ha iniciado sesion como JEFE con el alias ");
@@ -59,19 +62,17 @@ void inicioSesion(void)
 		printf("\n");
 
 		menuJefe();
-	} else if(strcmp(emp.estatus, "EMPLEADO") == 1)
-	{
+	} else if(strcmp(emp.estatus, "EMPLEADO") == 1){
 		printf("Se ha iniciado sesion como EMPLEADO con el alias ");
 		puts(nombre);
 
 		printf("\n");
 
 		menuEmpleado();
-	} else
-	{
+	} else{
 		printf("Empleado no encontrado");
 		main();
-	}*/
+	}
 }
 
 /*void registroUsuario(void)

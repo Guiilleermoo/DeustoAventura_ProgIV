@@ -35,15 +35,8 @@ void visualizarEmpleados(void)
     int nEmpleados = 5;
     int i, a;
     printf("Lista de empleados\n");
-    for (i = 0; i < nEmpleados; ++i)
-    {
-    	printf("	%i. Empleado\n", i);
-    	printf("		a. DNI\n");
-    	printf("		a. Nombre\n");
-    	printf("		a. Email\n");
-    	printf("		a. Estatus\n");
-    	printf("		a. Telefonos\n");
-	}
+
+    ShowWorkers();
 
     printf("0. Volver\n");
     fflush(stdout);

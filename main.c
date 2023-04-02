@@ -52,55 +52,8 @@ void inicioSesion(void)
 	scanf(" %s", contra);
 
 
-	Empleado emp = isWorker(nombre, contra);
-	puts(emp.estatus);
-	if(strcmp(emp.estatus, "JEFE") == 1)
-	{
-		printf("Se ha iniciado sesion como JEFE con el alias ");
-		puts(nombre);
-
-		printf("\n");
-
-		menuJefe();
-	} else if(strcmp(emp.estatus, "EMPLEADO") == 0){
-		printf("Se ha iniciado sesion como EMPLEADO con el alias ");
-		puts(nombre);
-
-		printf("\n");
-
-		menuEmpleado();
-	} else{
-		printf("Empleado no encontrado");
-		main();
-	}
+	isWorker(nombre, contra);
 }
-
-/*void registroUsuario(void)
-{
-    char dni[9], nombre[20], apellido[20], usuario[20], contra[20], correo[20], telefono[9];
-    printf("Registro de usuario\n");
-    printf("Introduzca el DNI\n");
-    fflush(stdout);
-    scanf(" %s", dni);
-    printf("Introduzca el nombre\n");
-    fflush(stdout);
-    scanf(" %s", nombre);
-    printf("Introduzca el apellido\n");
-    fflush(stdout);
-    scanf(" %s", apellido);
-    printf("Introduzca el nombre de usuario\n");
-    fflush(stdout);
-    scanf(" %s", usuario);
-    printf("Introduzca la contraseña\n");
-    fflush(stdout);
-    scanf(" %s", contra);
-    printf("Introduzca el correo\n");
-    fflush(stdout);
-    scanf(" %s", correo);
-    printf("Introduzca el numero de telefono\n");
-    fflush(stdout);
-    scanf(" %s", telefono);
-}*/
 
 void menuEmpleado()
 {
@@ -129,7 +82,7 @@ void menuEmpleado()
     	 visualizarMenuActividades();
      } else if (a == 0)
      {
-
+    	 main();
      }
 }
 

@@ -1,6 +1,7 @@
 #include "actividad.h"
 #include <stdio.h>
 #include "../Empleado/empleado.h"
+#include "../BD/funcionesBD.h"
 
 void menuJefe();
 
@@ -65,10 +66,8 @@ void visualizarTodas(void)
 	int nActividades = 5;
 	int i, a;
 	printf("Lista de todas las actividades\n");
-	for (i = 0; i < nActividades; ++i)
-	{
-		printf("	%i. Actividad\n", i);
-	}
+
+	ShowActivities();
 
 	printf("0. Pulsa enter para volver\n");
 	fflush(stdout);

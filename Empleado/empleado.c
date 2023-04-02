@@ -71,7 +71,7 @@ void anyadirEmpleado()
     printf("Introduzca el numero de telefono\n");
     fflush(stdout);
     scanf(" %s", telefono);
-    printf("Introduzca el numero de estatus\n");
+    printf("Introduzca el  estatus (JEFE/EMPLEADO)\n");
     fflush(stdout);
     scanf(" %s", status);
 

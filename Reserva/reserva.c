@@ -5,8 +5,8 @@
 void menuEmpleado();
 
 void visualizarReserva(Reserva reserva){
-	Cliente c= findClient(reserva.codCliente);
-	Actividad a= findActivity(reserva.codActividad);
+	Cliente c = findClient(reserva.codCliente);
+	Actividad a = findActivity(reserva.codActividad);
 	printf("DNI: %s Nombre:%s Apellido: %s Telefono: %i Correo: %s Actividad: %s Numeros de personas: %i Fecha: %s:",c.dni,c.nombre,c.apellido,c.telefono, c.mail, a.nombre_act, reserva.cantPersonas, reserva.fecha);
 }
 
@@ -14,9 +14,9 @@ void hacerReserva()
 {
 	 char dni[9], nombre[20], apellido[20], correo[20], telefono[9],confirmar;
 	 int numPersonas;
-	 char* fecha;
+	 char fecha;
 	 int codActividad;
-	 char* comunidad;
+	 char comunidad;
 		printf("Hacer Reserva\n");
 	   	printf("Introduzca el DNI\n");
 	   	fflush(stdout);
@@ -38,9 +38,9 @@ void hacerReserva()
 	   	// falta por hacer
 	   	printf("Introduzca la comunidad donde desea realizar la actividad:\n");
 		fflush(stdout);
-		scanf(" %s", comunidad);
+		scanf(" %s", &comunidad);
 	 	printf("Actividades que peudes realizar\n");
-		   	ShowActivitiesInCommunity(comunidad);
+		   	ShowActivitiesInCommunity(&comunidad);
 		printf("Inserte el codigo de la actividad que deseas realizar:\n ");
 		fflush(stdout);
 		   	scanf(" %d", &codActividad);
@@ -59,8 +59,8 @@ void hacerReserva()
 		//LAMAR FUNCION QUE METE LA RESERVA
 
 		if(confirmar=='S'){
-			int c= findClienDNI(dni);
-			Actividad a= findActivity(codActividad);
+			int c = findClienDNI(dni);
+			Actividad a = findActivity(codActividad);
 
 			newReserve(c, codActividad, fecha, numPersonas);
 

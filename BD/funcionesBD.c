@@ -170,7 +170,7 @@ void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* c
 	sqlite3_close(db);
 }
 
-Empleado isWorker(char nombre[], char contrasena[]){
+void isWorker(char nombre[], char contrasena[]){
     Empleado emp;
 
     sqlite3_open("BD/DeustoAventura.db", &db);
@@ -193,12 +193,33 @@ Empleado isWorker(char nombre[], char contrasena[]){
     emp.estatus = (char*) sqlite3_column_text(stmt, 7);
     emp.cod_park = (int) sqlite3_column_text(stmt, 8);
     printf("%s\n",emp.estatus);
+
+
+    if(emp.estatus[0] == 'J')
+    	{
+    		printf("Se ha iniciado sesion como JEFE con el alias ");
+    		puts(nombre);
+
+    		printf("\n");
+
+    		menuJefe();
+    	} else if(emp.estatus[0] == 'E'){
+    		printf("Se ha iniciado sesion como EMPLEADO con el alias ");
+    		puts(nombre);
+
+    		printf("\n");
+
+    		menuEmpleado();
+    	} else{
+    		printf("Empleado no encontrado");
+    		main();
+    	}
+
     sqlite3_finalize(stmt);
 
     sqlite3_close(db);
-
-    return emp;
 }
+
 
 /*void DeleteWorker()
 {

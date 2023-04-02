@@ -11,7 +11,7 @@ void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, 
 Actividad findActivity(int codActividad);
 void ShowWorkers();
 void InsertWorker(char dni[], char nombre[], char apellido[], int telefono, char correo[], char contrasena[],char estatus[]);
-Empleado isWorker(char nombre[], char contrasena[]);
+void isWorker(char nombre[], char contrasena[]);
 //void DeleteWorker();
 void newClient(char dni[],char nombre[],char apellido[],int tfno,char correo[],char contrasena[],int cod_ciu);
 Cliente findClient(int codCliente);

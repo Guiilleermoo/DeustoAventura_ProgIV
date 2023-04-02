@@ -51,7 +51,7 @@ void visualizarEmpleados(void)
 void anyadirEmpleado()
 {
 
-	char dni[9], nombre[20], apellido[20], usuario[20], contra[20], correo[20], telefono[9], status[20];
+	char dni[9], nombre[20], apellido[20], contra[20], correo[20], telefono[9], status[20];
     printf("Añadir empleado\n");
     printf("DNI\n");
     fflush(stdout);
@@ -65,9 +65,6 @@ void anyadirEmpleado()
     printf("Email\n");
     fflush(stdout);
     scanf(" %s", correo);
-    printf("Nombre de usuario\n");
-    fflush(stdout);
-    scanf(" %s", usuario);
     printf("Introduzca la contraseña\n");
     fflush(stdout);
     scanf(" %s", contra);
@@ -78,6 +75,8 @@ void anyadirEmpleado()
     fflush(stdout);
     scanf(" %s", status);
 
+
+    InsertWorker(dni, nombre, apellido, telefono, correo, contra, status);
     printf("El empleado ha sido añadido");
     gestionarEmpleados();
 }

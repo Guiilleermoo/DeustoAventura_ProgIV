@@ -124,7 +124,9 @@ void anyadirActividad()
 {
 	char nombre[20];
 	char dificultad;
-	int limite_per;
+	int limite_per_min;
+	int limite_per_max;
+	int edad_min;
 	printf("AÑADIR ACTIVIDAD\n");
 	printf("1. Nombre:  ");
 	fflush(stdout);
@@ -132,9 +134,18 @@ void anyadirActividad()
 	printf("2. Dificultad:  ");
 	fflush(stdout);
 	scanf(" %c", &dificultad);
-	printf("3. Limite de personas:  ");
+	printf("3. Limite de personas (MIN):  ");
 	fflush(stdout);
-	scanf(" %i", &limite_per);
+	scanf(" %i", &limite_per_min);
+	printf("4. Limite de personas (Max):  ");
+	fflush(stdout);
+	scanf(" %i", &limite_per_max);
+	printf("4. Edad minima:  ");
+	fflush(stdout);
+	scanf(" %i", &edad_min);
+
+	InsertActivity(nombre, dificultad, limite_per_min, limite_per_max, edad_min);
+
 
 	printf("La actividad ha sido añadida\n");
 	visualizarMenuActividades();

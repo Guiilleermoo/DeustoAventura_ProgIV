@@ -65,26 +65,30 @@ void ShowActivitiesInCommunity(char comunidad[])
 
 void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, int edad_min)
 {
-	sqlite3_open("DB/DeustoAventura.db", &db);
+	sqlite3 *db;
+	char *error = 0;
+	int rc;
+	rc = sqlite3_open("DeustoAventura.db", &db);
 
-	char sql[] = "insert into ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX, EDAD_MIN) values (?, ?, ?, ?, ?)";
+	 if (rc == SQLITE_OK) {
 
-	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
+        char query[400];
+		sprintf(query, "INSERT INTO ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX,  EDAD_MIN) VALUES ('%s', '%s', %d, '%d', '%d')", nombre, dificultad, per_min, per_max, edad_min);
 
-	sqlite3_bind_text(stmt, 1, nombre, strlen(nombre), SQLITE_STATIC);
-	sqlite3_bind_text(stmt, 2, dificultad, strlen(nombre), SQLITE_STATIC);
-	sqlite3_bind_int(stmt, 3, per_min);
-	sqlite3_bind_int(stmt, 4, per_max);
-	sqlite3_bind_int(stmt, 5, edad_min);
+		rc = sqlite3_exec(db, query, 0, 0, &error);
 
-	result = sqlite3_step(stmt);
-	if (result != SQLITE_DONE) {
-		printf("Error insertando la actividad\n");
-	}else{
-		printf("Actividad insertada - >  Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", nombre, dificultad, per_min, per_max, edad_min);
-	}
+		    if (rc == SQLITE_OK) {
+		        printf("Actividad insertada correctamente\n\n");
+		  } else {
+		        printf("Error al insertar actividad: %s\n", error);
+		        }
+		  } else {
+		      printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
+		    }
 
-	sqlite3_close(db);
+			sqlite3_finalize(stmt);
+		    sqlite3_close(db);
+
 }
 
 /*void DeleteActivity()
@@ -479,6 +483,7 @@ void insertPark(int cod_park,char nombre[],int horaIni,int horaFin,int capacidad
 	{
 		printf("Parque insertado - >  CodPark: %d - Nombre: %s - Hora Inicio: %d - Hora fin: %d - Capacidad: %d - CodCiudad: %d - CodEncargado: %d\n", cod_park,nombre,horaIni,horaFin,capacidad,codCiu,codEncargado);
 	}
+
 
 	sqlite3_close(db);
 }

@@ -7,6 +7,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void menuJefe();
+void menuEmpleado();
+void main();
+
 sqlite3 *db;
 sqlite3_stmt *stmt;
 int result;
@@ -26,7 +30,7 @@ void ShowActivities()
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			printf("Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_int(stmt, 3), (int) sqlite3_column_int(stmt, 4), (int) sqlite3_column_int(stmt, 5));
+			printf("Codigo: %i - Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (int) sqlite3_column_int(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_int(stmt, 3), (int) sqlite3_column_int(stmt, 4), (int) sqlite3_column_int(stmt, 5));
 		}
 	} while (result == SQLITE_ROW);
 	printf("\n");
@@ -94,34 +98,42 @@ void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, 
 	int rc;
 	rc = sqlite3_open("DeustoAventura.db", &db);
 
-	 if (rc == SQLITE_OK) {
+    char query[400];
+    sprintf(query, "INSERT INTO ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX,  EDAD_MIN) VALUES ('%s', '%s', %d, '%d', '%d')", nombre, dificultad, per_min, per_max, edad_min);
 
-        char query[400];
-		sprintf(query, "INSERT INTO ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX,  EDAD_MIN) VALUES ('%s', '%s', %d, '%d', '%d')", nombre, dificultad, per_min, per_max, edad_min);
+	rc = sqlite3_exec(db, query, 0, 0, &error);
 
-		rc = sqlite3_exec(db, query, 0, 0, &error);
+	if (rc == SQLITE_OK)
+	{
+		printf("Actividad insertada correctamente\n\n");
+	} else
+	{
+		printf("Error al insertar actividad: %s\n", error);
+	}
 
-		    if (rc == SQLITE_OK) {
-		        printf("Actividad insertada correctamente\n\n");
-		  } else {
-		        printf("Error al insertar actividad: %s\n", error);
-		        }
-		  } else {
-		      printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-		    }
-
-			sqlite3_finalize(stmt);
-		    sqlite3_close(db);
-
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
 }
 
-/*void DeleteActivity()
+void DeleteActivity(int cod_act)
 {
 	sqlite3_open("DeustoAventura.db", &db);
+	char sql[] = "delete from ACTIVIDAD where COD_ACT = ?";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
+	sqlite3_bind_int(stmt, 1, cod_act);
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE)
+	{
+		printf("Error borrando la actividad\n");
+	}else
+	{
+		printf("Actividad con codigo = %i borrado\n", cod_act);
+	}
 
 	sqlite3_close(db);
-}*/
+}
 
 Actividad findActivity(int codActividad)
 {
@@ -237,26 +249,26 @@ void isWorker(char nombre[], char contrasena[]){
 
     		sqlite3_finalize(stmt);
     	    sqlite3_close(db);
+
     		menuJefe();
     	} else if(emp.estatus[0] == 'E'){
     		printf("Se ha iniciado sesion como EMPLEADO con el alias ");
     		puts(nombre);
 
     		printf("\n");
+
     		sqlite3_finalize(stmt);
-    			    sqlite3_close(db);
+    		sqlite3_close(db);
 
 
     		menuEmpleado();
     	} else {
     		sqlite3_finalize(stmt);
+    		sqlite3_close(db);
 
-    		    sqlite3_close(db);
     		printf("Empleado no encontrado");
     		main();
     	}
-
-
 }
 
 

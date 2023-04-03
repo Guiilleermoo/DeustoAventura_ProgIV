@@ -9,7 +9,7 @@ void ShowActivities();
 void ShowActivitiesInProvince(char ciudad[]);
 void showActivitiesByDifficulty(char dificultad[]);
 void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, int edad_min);
-//void DeleteActivity();
+void DeleteActivity(int cod_act);
 Actividad findActivity(int codActividad);
 void ShowWorkers();
 void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* correo, char *contrasena,char* estatus, int cod_park);

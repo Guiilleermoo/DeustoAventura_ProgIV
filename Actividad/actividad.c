@@ -119,17 +119,16 @@ void visualizarDificultad()
 void anyadirActividad()
 {
 	char nombre[20];
-	char dificultad;
-	int limite_per_min;
-	int limite_per_max;
-	int edad_min;
+	char dificultad[6];
+	int limite_per_min, limite_per_max, edad_min;
+
 	printf("AÑADIR ACTIVIDAD\n");
 	printf("1. Nombre:  ");
 	fflush(stdout);
 	scanf(" %s", nombre);
 	printf("2. Dificultad:  ");
 	fflush(stdout);
-	scanf(" %c", &dificultad);
+	scanf(" %s", dificultad);
 	printf("3. Limite de personas (MIN):  ");
 	fflush(stdout);
 	scanf(" %i", &limite_per_min);
@@ -142,30 +141,30 @@ void anyadirActividad()
 
 	InsertActivity(nombre, dificultad, limite_per_min, limite_per_max, edad_min);
 
-
-	printf("La actividad ha sido añadida\n");
 	visualizarMenuActividades();
  }
 
 void eliminarActividad()
 {
-	char codigo[9];
+	int codigo;
 	char confirmacion;
-	printf("Eliminar actividad\n");
+
+	ShowActivities();
+
 	printf("¿Que actividad desea eliminar?(Introducir el codigo de la actividad):  ");
 	fflush(stdout);
-	scanf(" %s", codigo);
-	printf("Confirmar la eliminacion de la actividad con codigo x (s/n):  ");
+	scanf(" %i", &codigo);
+	printf("Confirmar la eliminacion de la actividad con codigo %i (s/n):  ", codigo);
 	fflush(stdout);
 	printf("\n");
 	scanf(" %c", &confirmacion);
 	if (confirmacion == 's')
 	{
-		printf("La actividad ha sido eliminada con exito\n");
-	    gestionarEmpleados();
+		DeleteActivity(codigo);
+	    gestionarActividades();
 	} else
 	{
 	   printf("La actividad no ha sido eliminada\n");
-	   eliminarEmpleado();
+	   gestionarActividades();
 	}
 }

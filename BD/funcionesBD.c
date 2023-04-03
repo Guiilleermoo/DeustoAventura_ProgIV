@@ -15,8 +15,19 @@ sqlite3 *db;
 sqlite3_stmt *stmt;
 int result;
 
-//** ACTIVITIES **//
 
+void mensajeLog(char* msg,char* error){
+	FILE* f;
+	f=fopen("log.txt","a");
+
+	if(error==NULL){
+		fprintf(f,"%s\n",msg);
+	}else{
+		fprintf(f,"%s: %s\n",msg,error);
+	}
+	fclose(f);
+}
+//** ACTIVITIES **//
 void ShowActivities()
 {
 	sqlite3_open("DeustoAventura.db", &db);
@@ -102,7 +113,7 @@ void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, 
     sprintf(query, "INSERT INTO ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX,  EDAD_MIN) VALUES ('%s', '%s', %d, '%d', '%d')", nombre, dificultad, per_min, per_max, edad_min);
 
 	rc = sqlite3_exec(db, query, 0, 0, &error);
-
+	 mensajeLog("Insertando actividad",error);
 	if (rc == SQLITE_OK)
 	{
 		printf("Actividad insertada correctamente\n\n");
@@ -173,6 +184,7 @@ void ShowWorkers()
 
 	printf("\n");
 	printf("Mostrando empleados:\n");
+
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
@@ -204,6 +216,9 @@ void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* c
 
 	        rc = sqlite3_exec(db, query, 0, 0, &error);
 
+	        printf("%s",error);
+
+	        mensajeLog("Insertar trabajador", error);
 	        if (rc == SQLITE_OK) {
 	            printf("Trabajador insertado correctamente\n\n");
 	        } else {

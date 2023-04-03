@@ -28,6 +28,6 @@ void insertProvince(int cod_prov,char nombreProv[]);
 
 void DeleteReserve(int codReserva, int codActividad);
 
-
+void mensajeLog(char* msg,char* error);
 
 #endif

@@ -11,12 +11,12 @@ typedef struct{
 
 }Actividad;
 
-void gestionarActividades(void);
-void visualizarMenuActividades(void);
-void visualizarTodas(void);
-void visualizarCiudad(void);
-void visualizarDificultad(void);
-void anyadirActividad(void);
-void eliminarActividad(void);
+void gestionarActividades();
+void visualizarMenuActividades();
+void visualizarTodas();
+void visualizarProvincia();
+void visualizarDificultad();
+void anyadirActividad();
+void eliminarActividad();
 
 #endif

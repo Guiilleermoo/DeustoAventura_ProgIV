@@ -5,7 +5,7 @@
 
 void menuJefe();
 
-void gestionarActividades(void)
+void gestionarActividades()
 {
     printf("MENU ACTIVIDADES\n");
     printf("1. Visualizar actividades\n");
@@ -34,12 +34,12 @@ void gestionarActividades(void)
     }
 }
 
-void visualizarMenuActividades(void)
+void visualizarMenuActividades()
 {
    printf("VER ACTIVIDADES\n");
    printf("1. Visualizar todas actividades\n");
-   printf("2. Buscar actividades por ciudad\n");
-   printf("3. Buscra actividades por nivel de dificultad\n");
+   printf("2. Buscar actividades por provincia\n");
+   printf("3. Buscar actividades por nivel de dificultad\n");
    printf("0. Volver\n");
    printf("Elija su opcion:  ");
    fflush(stdout);
@@ -64,7 +64,7 @@ void visualizarMenuActividades(void)
 		}
     } else if (a == 2)
     {
-    	visualizarCiudad();
+    	visualizarProvincia();
     } else if (a == 3)
     {
     	visualizarDificultad();
@@ -74,14 +74,14 @@ void visualizarMenuActividades(void)
     }
 }
 
-void visualizarCiudad(void)
+void visualizarProvincia()
 {
-    char ciudad[20];
-    printf("Que ciudad desea consultar\n");
+    char provincia[20];
+    printf("Que provincia desea consultar:  ");
     fflush(stdout);
-    scanf(" %s", ciudad);
+    scanf(" %s", provincia);
 
-    ShowActivitiesInCommunity(ciudad);
+    ShowActivitiesInProvince(provincia);
 
     int a;
 
@@ -95,20 +95,16 @@ void visualizarCiudad(void)
     }
 }
 
-void visualizarDificultad(void)
+void visualizarDificultad()
 {
-	int b;
-    printf("Que nivel de dificultad desea consultar(1-10)\n");
+	char dificultad[6];
+    printf("Que nivel de dificultad desea consultar(Baja/Media/Alta):   ");
     fflush(stdout);
-    scanf(" %d", &b);
+    scanf(" %s", dificultad);
 
-    int nActividades = 5;
-    int i, a;
-    printf("Lista de todas las actividades con dificultad %i\n", b);
-    for (i = 0; i < nActividades; ++i)
-    {
-    	printf("	%i. Actividad\n", i);
-    }
+    showActivitiesByDifficulty(dificultad);
+
+    int a;
 
     printf("0. Pulsa enter para volver\n");
     fflush(stdout);

@@ -36,24 +36,48 @@ void ShowActivities()
 	sqlite3_close(db);
 }
 
-void ShowActivitiesInCommunity(char comunidad[])
+void ShowActivitiesInProvince(char provincia[])
 {
 	sqlite3_open("DeustoAventura.db", &db);
 
-	char sql[] = "select NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX, EDAD_MIN, COD_ACT"
-			"from ACTIVIDAD A, PARQUE P, LUGAR L, OFERTA O"
-			"where A.COD_ACT = O.COD_ACT and O.COD_PARK = P.COD_PARK and P.COD_CIU = L.COD_CIU and NOMBRE_CIU = ?";
+	char sql[] = "select A.COD_ACT, A.NOMBRE_ACT, A.DIFICULTAD, A.LIMITE_PER_MIN, A.LIMITE_PER_MAX, A.EDAD_MIN from ACTIVIDAD A, PARQUE P, LUGAR L, OFERTA O, PROVINCIA PR where A.COD_ACT = O.COD_ACT and O.COD_PARK = P.COD_PARK and P.COD_CIU = L.COD_CIU and L.COD_PROV = PR.COD_PROV and NOMBRE_PROV = ?";
 
 
 	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
-	sqlite3_bind_text(stmt, 1, comunidad, strlen(comunidad), SQLITE_STATIC);
+	sqlite3_bind_text(stmt, 1, provincia, strlen(provincia), SQLITE_STATIC);
 
 	printf("\n");
-	printf("Mostrando actividades de %s:\n", comunidad);
+	printf("Mostrando actividades de %s:\n", provincia);
+
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			printf("Cod Act: %d Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (int) sqlite3_column_int(stmt, 5), (char*) sqlite3_column_text(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (int) sqlite3_column_text(stmt, 2), (int) sqlite3_column_text(stmt, 3), (int) sqlite3_column_text(stmt, 4));
+			printf("Cod Act: %d Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (int) sqlite3_column_int(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_text(stmt, 3), (int) sqlite3_column_text(stmt, 4), (int) sqlite3_column_text(stmt, 5));
+		}
+	} while (result == SQLITE_ROW);
+	printf("\n");
+
+	sqlite3_finalize(stmt);
+
+	sqlite3_close(db);
+}
+
+void showActivitiesByDifficulty(char dificultad[])
+{
+	sqlite3_open("DeustoAventura.db", &db);
+
+	char sql[] = "select * from ACTIVIDAD where DIFICULTAD = ?";
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	sqlite3_bind_text(stmt, 1, dificultad, strlen(dificultad), SQLITE_STATIC);
+
+	printf("\n");
+	printf("Mostrando actividades con dificultad %s:\n", dificultad);
+
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			printf("Cod Act: %d Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (int) sqlite3_column_int(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_text(stmt, 3), (int) sqlite3_column_text(stmt, 4), (int) sqlite3_column_text(stmt, 5));
 		}
 	} while (result == SQLITE_ROW);
 	printf("\n");

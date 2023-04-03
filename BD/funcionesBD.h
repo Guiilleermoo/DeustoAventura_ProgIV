@@ -6,7 +6,8 @@
 #include "../Actividad/actividad.h"
 
 void ShowActivities();
-void ShowActivitiesInCommunity(char comunidad[]);
+void ShowActivitiesInProvince(char ciudad[]);
+void showActivitiesByDifficulty(char dificultad[]);
 void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, int edad_min);
 //void DeleteActivity();
 Actividad findActivity(int codActividad);

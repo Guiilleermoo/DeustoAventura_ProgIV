@@ -39,8 +39,8 @@ void hacerReserva()
 	   	printf("Introduzca la comunidad donde desea realizar la actividad:\n");
 		fflush(stdout);
 		scanf(" %s", &comunidad);
-	 	printf("Actividades que peudes realizar\n");
-		   	ShowActivitiesInCommunity(&comunidad);
+	 	printf("Actividades que puedes realizar\n");
+		   	ShowActivitiesInProvince(&comunidad);
 		printf("Inserte el codigo de la actividad que deseas realizar:\n ");
 		fflush(stdout);
 		   	scanf(" %d", &codActividad);

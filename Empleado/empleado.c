@@ -94,7 +94,8 @@ void eliminarEmpleado()
 {
 	char dni[10];
     char confirmacion;
-    printf("Eliminar empleado\n");
+
+    ShowWorkers();
     printf("¿Que empleado desea eliminar?(Introducir el DNI del empleado)\n");
     fflush(stdout);
     scanf(" %s", dni);

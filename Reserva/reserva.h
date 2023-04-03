@@ -10,7 +10,8 @@ typedef struct{
 	int cantPersonas;
 }Reserva;
 
-void visualizarReserva(Reserva reserva);
+void visualizarUnaReserva();
+void visualizarReservas();
 void hacerReserva();
 void cancelarReserva();
 #endif /* RESERVA_RESERVA_H_ */

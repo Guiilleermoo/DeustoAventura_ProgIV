@@ -62,8 +62,9 @@ void menuEmpleado()
 	printf("Gestion de actividades DeustoAventura\n");
     printf("1. Hacer una reserva\n");
     printf("2. Cancelar una reserva\n");
-    printf("3. Visualizar una reserva\n");
-    printf("4. Visualizar actividades\n");
+    printf("3. Visualizar todas las reservas\n");
+    printf("4. Visualizar una reserva\n");
+    printf("5. Visualizar actividades\n");
     printf("0. Salir\n");
     printf("Elija su opcion:  ");
     fflush(stdout);
@@ -79,8 +80,11 @@ void menuEmpleado()
     	cancelarReserva();
      } else if (a == 3)
      {
-    		 //visualizarReservas();
+    	visualizarReservas();
      } else if (a == 4)
+     {
+    	visualizarUnaReserva();
+     } else if (a == 5)
      {
     	 visualizarMenuActividades();
      } else if (a == 0)

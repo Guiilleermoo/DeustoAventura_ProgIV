@@ -4,6 +4,7 @@
 #include "../Empleado/empleado.h"
 #include "../Actividad/actividad.h"
 #include "../Cliente/cliente.h"
+#include "../Reserva/reserva.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -445,10 +446,10 @@ void insertOffer(int cod_park,int cod_act,int duracion)
 
 //** RESERVES **//
 
-void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per)
+void newReserve(int cod_cliente,int cod_act,char* fecha_res,int cant_per)
 {
 	sqlite3_open("DeustoAventura.db", &db);
-	char sql[] = "insert into RESERVA (COD_CLTE, COD_ACT, FECHA_RES,CANT_PER,IMPORTE) values (?, ?, ?, ?, ?)";
+	char sql[] = "insert into RESERVA (COD_CLTE, COD_ACT, FECHA_RES,CANT_PER) values (?, ?, ?, ?)";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
 	sqlite3_bind_int(stmt, 1, cod_cliente);
@@ -483,7 +484,7 @@ void ShowReserves()
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			printf("Codigo del Cliente: %d - Codigo Actividad: %d - Fecha de la reserva: %s - Numero de personas: %i - Importe: %i\n", (int) sqlite3_column_int(stmt, 0), (int) sqlite3_column_int(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_int(stmt, 3), (int) sqlite3_column_int(stmt, 4));
+			printf("Codigo del Cliente: %d - Codigo Actividad: %d - Fecha de la reserva: %s - Numero de personas: %i \n", (int) sqlite3_column_int(stmt, 0), (int) sqlite3_column_int(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_int(stmt, 3));
 		}
 	} while (result == SQLITE_ROW);
 
@@ -492,6 +493,33 @@ void ShowReserves()
 	sqlite3_finalize(stmt);
 
 	sqlite3_close(db);
+}
+
+Reserva findReserva(int cod_cliente, int cod_act, char* fecha){
+	Reserva reserva;
+	sqlite3_open("DeustoAventura.db", &db);
+
+	char sql[] = "select * from RESERVA where COD_CLTE = ? and COD_ACT = ? and FECHA_RES = ?";
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	sqlite3_bind_int(stmt, 0, cod_cliente);
+	sqlite3_bind_int(stmt, 1, cod_act);
+	sqlite3_bind_int(stmt, 2, fecha);
+
+
+	result = sqlite3_step(stmt) ;
+
+
+	reserva.codCliente = (int) sqlite3_column_int(stmt, 0);
+	reserva.codActividad = (int) sqlite3_column_int(stmt, 1);
+	reserva.fecha = (char *) sqlite3_column_text(stmt, 2);
+	reserva.cantPersonas = (int) sqlite3_column_int(stmt, 3);
+
+	sqlite3_finalize(stmt);
+
+	sqlite3_close(db);
+
+	return reserva;
 }
 
 //** PARKS **//

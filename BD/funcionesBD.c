@@ -246,7 +246,7 @@ void DeleteWorker(char* dni)
 		printf("Error borrando empleado\n");
 	}else
 	{
-		printf("Empleado con DNI = %s borrado", dni);
+		printf("Empleado con DNI = %s borrado\n", dni);
 	}
 
 	sqlite3_close(db);

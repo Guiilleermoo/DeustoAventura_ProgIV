@@ -26,7 +26,7 @@ void gestionarEmpleados()
 		eliminarEmpleado();
 	} else if (a == 0)
 	{
-		main();
+		menuJefe();
 	}
 }
 

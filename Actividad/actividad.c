@@ -7,12 +7,14 @@ void menuJefe();
 
 void gestionarActividades(void)
 {
-    printf("Menu actividades\n");
+    printf("MENU ACTIVIDADES\n");
     printf("1. Visualizar actividades\n");
     printf("2. Añadir actividad\n");
     printf("3. Eliminar actividad\n");
     printf("0. Volver\n");
+    printf("Elija su opcion:  ");
     fflush(stdout);
+    printf("\n");
     int a;
 
     scanf(" %d", &a);
@@ -34,12 +36,14 @@ void gestionarActividades(void)
 
 void visualizarMenuActividades(void)
 {
-   printf("Ver actividades\n");
+   printf("VER ACTIVIDADES\n");
    printf("1. Visualizar todas actividades\n");
    printf("2. Buscar actividades por ciudad\n");
    printf("3. Buscra actividades por nivel de dificultad\n");
    printf("0. Volver\n");
+   printf("Elija su opcion:  ");
    fflush(stdout);
+   printf("\n");
    int a;
 
    scanf(" %d", &a);
@@ -121,18 +125,18 @@ void anyadirActividad()
 	char nombre[20];
 	char dificultad;
 	int limite_per;
-	printf("Añadir actividad\n");
-	printf("1. Nombre: \n");
+	printf("AÑADIR ACTIVIDAD\n");
+	printf("1. Nombre:  ");
 	fflush(stdout);
 	scanf(" %s", nombre);
-	printf("2. Dificultad: \n");
+	printf("2. Dificultad:  ");
 	fflush(stdout);
 	scanf(" %c", &dificultad);
-	printf("3. Limite de personas: \n");
+	printf("3. Limite de personas:  ");
 	fflush(stdout);
 	scanf(" %i", &limite_per);
 
-	printf("La actividad ha sido añadida");
+	printf("La actividad ha sido añadida\n");
 	visualizarMenuActividades();
  }
 
@@ -141,19 +145,20 @@ void eliminarActividad()
 	char codigo[9];
 	char confirmacion;
 	printf("Eliminar actividad\n");
-	printf("¿Que actividad desea eliminar?(Introducir el codigo de la actividad)\n");
+	printf("¿Que actividad desea eliminar?(Introducir el codigo de la actividad):  ");
 	fflush(stdout);
 	scanf(" %s", codigo);
-	printf("Confirmar la eliminacion de la actividad con codigo x (s/n)\n");
+	printf("Confirmar la eliminacion de la actividad con codigo x (s/n):  ");
 	fflush(stdout);
+	printf("\n");
 	scanf(" %c", &confirmacion);
 	if (confirmacion == 's')
 	{
-		printf("La actividad ha sido eliminada con exito");
+		printf("La actividad ha sido eliminada con exito\n");
 	    gestionarEmpleados();
 	} else
 	{
-	   printf("La actividad no ha sido eliminada");
+	   printf("La actividad no ha sido eliminada\n");
 	   eliminarEmpleado();
 	}
 }

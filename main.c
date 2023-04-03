@@ -19,10 +19,12 @@ int main(void)
 //    ShowCsvData();                   // Muestra los datos csv leídos a través de la consola
 //    FreeCsvData();				   // Libera la memoria dinámica
 
-	printf("Gestion de actividades DeustoAventura\n");
+	printf("GESTION DE DEUSTOAVENTURA\n\n");
 	printf("1. Iniciar sesion\n");
 	printf("0. Salir\n");
+	printf("Elija su opcion:  ");
 	fflush(stdout);
+	printf("\n");
 	int a;
 
 
@@ -48,6 +50,7 @@ void inicioSesion(void)
 	scanf(" %s", nombre);
 	printf("Introduzca la contraseña:  ");
 	fflush(stdout);
+	printf("\n");
 	scanf(" %s", contra);
 
 
@@ -62,7 +65,9 @@ void menuEmpleado()
     printf("3. Visualizar una reserva\n");
     printf("4. Visualizar actividades\n");
     printf("0. Salir\n");
+    printf("Elija su opcion:  ");
     fflush(stdout);
+    printf("\n");
     int a;
     scanf("%d", &a);
     fflush(stdout);
@@ -90,7 +95,9 @@ void menuJefe(void)
 	printf("1. Gestionar empleados\n");
 	printf("2. Gestionar actividades\n");
 	printf("0. Volver\n");
+	printf("Elija su opcion:  ");
 	fflush(stdout);
+	printf("\n");
 	int a;
 
 

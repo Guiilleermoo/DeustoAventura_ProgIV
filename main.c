@@ -27,7 +27,6 @@ int main(void)
 
 
 	scanf(" %d", &a);
-	//printf("Se leyó el caracter: %d\n", a);
     fflush(stdout);
     if (a == 1) {
 		inicioSesion();
@@ -42,12 +41,12 @@ int main(void)
 void inicioSesion(void)
 {
     char nombre[20], contra[20];
-    printf("Inicio de sesion\n");
+    printf("INICIO DE SESION\n\n");
 
-    printf("Introduzca el usuario\n");
+    printf("Introduzca el usuario: \t");
 	fflush(stdout);
 	scanf(" %s", nombre);
-	printf("Introduzca la contraseña\n");
+	printf("Introduzca la contraseña:  ");
 	fflush(stdout);
 	scanf(" %s", contra);
 
@@ -66,7 +65,6 @@ void menuEmpleado()
     fflush(stdout);
     int a;
     scanf("%d", &a);
-    printf("Se leyó el caracter: %d\n", a);
     fflush(stdout);
     if (a == 1)
     {
@@ -88,7 +86,7 @@ void menuEmpleado()
 
 void menuJefe(void)
 {
-    printf("Menu principal jefe\n");
+    printf("MENU PRINCIPAL JEFE\n\n");
 	printf("1. Gestionar empleados\n");
 	printf("2. Gestionar actividades\n");
 	printf("0. Volver\n");
@@ -97,7 +95,6 @@ void menuJefe(void)
 
 
 	scanf(" %d", &a);
-	printf("Se leyó el caracter: %d\n", a);
 	fflush(stdout);
 	if (a == 1)
 	{

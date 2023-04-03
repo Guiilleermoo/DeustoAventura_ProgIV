@@ -13,7 +13,7 @@ Actividad findActivity(int codActividad);
 void ShowWorkers();
 void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* correo, char *contrasena,char* estatus, int cod_park);
 void isWorker(char nombre[], char contrasena[]);
-//void DeleteWorker();
+void DeleteWorker(char* dni);
 void newClient(char dni[],char nombre[],char apellido[],int tfno,char correo[],char contrasena[],int cod_ciu);
 Cliente findClient(int codCliente);
 int findClienDNI(char* dni);

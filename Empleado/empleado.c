@@ -4,7 +4,7 @@
 
 void gestionarEmpleados()
 {
-	printf("Gestionar empleado\n");
+	printf("GESTIONAR EMPLEADO\n\n");
 	printf("1. Visualizar empleados\n");
 	printf("2. Añadir empleado\n");
 	printf("3. Borrar empleado\n");
@@ -14,7 +14,6 @@ void gestionarEmpleados()
 
 
 	scanf(" %d", &a);
-	printf("Se leyó el caracter: %d\n", a);
 	fflush(stdout);
 	if (a == 1)
 	{
@@ -35,7 +34,7 @@ void visualizarEmpleados(void)
 {
     int nEmpleados = 5;
     int i, a;
-    printf("Lista de empleados\n");
+    printf("LISTA DE EMPLEADOS\n");
 
     ShowWorkers();
 
@@ -51,7 +50,7 @@ void visualizarEmpleados(void)
 
 void anyadirEmpleado()
 {
-	char dni[10];
+	char dni[11];
 	char nombre[10];
 	char apellido[10];
 	int tfno;
@@ -60,29 +59,29 @@ void anyadirEmpleado()
 	char estatus[10];
 	int cod_park;
 
-	printf("Añadir empleado\n");
-	printf("DNI\n");
+	printf("AÑADIR EMPLEADO\n");
+	printf("DNI:  ");
 	fflush(stdout);
 	scanf(" %s", dni);
-	printf("Nombre\n");
+	printf("Nombre:  ");
 	fflush(stdout);
 	scanf(" %s", nombre);
-	printf("Apellido\n");
+	printf("Apellido:  ");
 	fflush(stdout);
 	scanf(" %s", apellido);
-	printf("Email\n");
+	printf("Email:  ");
 	fflush(stdout);
 	scanf(" %s", correo);
-	printf("Introduzca la contraseña\n");
+	printf("Introduzca la contraseña:  ");
 	fflush(stdout);
 	scanf(" %s", contra);
-	printf("Introduzca el numero de telefono\n");
+	printf("Introduzca el numero de telefono:  ");
 	fflush(stdout);
 	scanf(" %i", &tfno);
-	printf("Introduzca el estatus (JEFE/EMPLEADO)\n");
+	printf("Introduzca el estatus (JEFE/EMPLEADO):  ");
 	fflush(stdout);
 	scanf(" %s", estatus);
-	printf("Introduzca el codigo de parque\n");
+	printf("Introduzca el codigo de parque:  ");
 	fflush(stdout);
 	scanf(" %i", &cod_park);
 
@@ -93,18 +92,19 @@ void anyadirEmpleado()
 
 void eliminarEmpleado()
 {
-	char dni[9];
+	char dni[10];
     char confirmacion;
     printf("Eliminar empleado\n");
     printf("¿Que empleado desea eliminar?(Introducir el DNI del empleado)\n");
     fflush(stdout);
     scanf(" %s", dni);
-    printf("Confirmar la eliminacion del empleado con codigo x (s/n)\n");
+    printf("Confirmar la eliminacion del empleado con codigo %s (s/n)\n", dni);
     fflush(stdout);
     scanf(" %c", &confirmacion);
     if (confirmacion == 's')
     {
-    	printf("El empleado ha sido eliminado con exito");
+    	DeleteWorker(dni);
+    	printf("El empleado ha sido eliminado con exito\n");
     	gestionarEmpleados();
      } else
      {

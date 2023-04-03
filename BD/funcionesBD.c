@@ -136,7 +136,7 @@ void ShowWorkers()
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			printf("DNI: %s - Nombre Y Apellido: %s %s - Tfno: %i - Correo: %s - Estatus: %s\n", (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (char*) sqlite3_column_text(stmt, 3), (int) sqlite3_column_text(stmt, 4), (char*) sqlite3_column_text(stmt, 5), (char*) sqlite3_column_text(stmt, 7));
+			printf("DNI: %s - Nombre Y Apellido: %s %s - Tfno: %i - Correo: %s - Estatus: %s\n", (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (char*) sqlite3_column_text(stmt, 3), (int) sqlite3_column_int(stmt, 4), (char*) sqlite3_column_text(stmt, 5), (char*) sqlite3_column_text(stmt, 7));
 		}
 	} while (result == SQLITE_ROW);
 	printf("\n");
@@ -157,7 +157,7 @@ void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* c
 	    rc = sqlite3_open("DeustoAventura.db", &db);
 
 	    if (rc == SQLITE_OK) {
-	        printf("Conexión establecida\n");
+
 
 	        char query[400];
 	        sprintf(query, "INSERT INTO EMPLEADO ( DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO,  CONTRASENA, ESTATUS, COD_PARK) VALUES ('%s', '%s', '%s', %d, '%s', '%s', '%s', %d)", dni, nombre, apellido, telefono, correo, contrasena, estatus, cod_park);
@@ -165,7 +165,7 @@ void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* c
 	        rc = sqlite3_exec(db, query, 0, 0, &error);
 
 	        if (rc == SQLITE_OK) {
-	            printf("Trabajador insertado correctamente\n");
+	            printf("Trabajador insertado correctamente\n\n");
 	        } else {
 	            printf("Error al insertar trabajador: %s\n", error);
 	        }
@@ -191,7 +191,6 @@ void isWorker(char nombre[], char contrasena[]){
 
     result = sqlite3_step(stmt);
 
-
     emp.DNI = (char*) sqlite3_column_text(stmt, 1);
     emp.nombre = (char*) sqlite3_column_text(stmt, 2);
     emp.apellido = (char*) sqlite3_column_text(stmt, 3);
@@ -200,12 +199,10 @@ void isWorker(char nombre[], char contrasena[]){
     emp.contrasena = (char*) sqlite3_column_text(stmt, 6);
     emp.estatus = (char*) sqlite3_column_text(stmt, 7);
     emp.cod_park = (int) sqlite3_column_text(stmt, 8);
-    printf("%s\n",emp.estatus);
-
 
     if(emp.estatus[0] == 'J')
     	{
-    		printf("Se ha iniciado sesion como JEFE con el alias ");
+    		printf("Se ha iniciado sesion como JEFE con el nombre:  ");
     		puts(nombre);
 
     		printf("\n");
@@ -235,10 +232,25 @@ void isWorker(char nombre[], char contrasena[]){
 }
 
 
-/*void DeleteWorker()
+void DeleteWorker(char* dni)
 {
+	sqlite3_open("DeustoAventura.db", &db);
+	char sql[] = "delete from EMPLEADO where DNI = ?";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-}*/
+	sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
+
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE)
+	{
+		printf("Error borrando empleado\n");
+	}else
+	{
+		printf("Empleado con DNI = %s borrado", dni);
+	}
+
+	sqlite3_close(db);
+}
 
 //** CLIENTS **//
 

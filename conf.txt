@@ -1,0 +1,2 @@
+ruta=DeustoAventura.bd
+salida=Reserva.txt

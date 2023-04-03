@@ -11,6 +11,8 @@
 void inicioSesion();
 void menuEmpleado();
 void menuJefe();
+char* load_config(char* filename, char* buscar);
+
 
 int main(void)
 {
@@ -18,7 +20,7 @@ int main(void)
 //    ReadCsvData(filename);           // Leer datos csv
 //    ShowCsvData();                   // Muestra los datos csv leídos a través de la consola
 //    FreeCsvData();				   // Libera la memoria dinámica
-
+char* asS=load_config("conf.txt","ruta");
 	printf("GESTION DE DEUSTOAVENTURA\n\n");
 	printf("1. Iniciar sesion\n");
 	printf("0. Salir\n");
@@ -118,8 +120,47 @@ void menuJefe(void)
 
 
 
+char* load_config(char* filename, char* buscar)
+{
+     FILE* archivo;
+         char linea[100];
+         char* igual;
+         char buscar2[20];
+         char* devolver;
+          archivo = fopen(filename, "r");
 
+          if (archivo == NULL)
+          {
+             printf("Error al abrir el archivo.\n");
+             return buscar;
+           }
 
+          while (fgets(linea, 100, archivo)) {
+
+                int i = 0;
+                while (linea[i] != '=')
+                {
+                    buscar2[i] = linea[i];
+                    i++;
+                   // printf("%c",linea[i]);
+                }
+                buscar2[i] = '\0';
+
+             //   printf("%s\n", buscar2);
+              if(strcmp(buscar, buscar2) == 0)
+              {
+                  igual = strchr(linea, '=');
+                  if (igual != NULL) {
+                	  char resultado[100];
+                  strcpy(resultado, igual + 1);
+                  printf("%s", resultado);
+                  devolver=resultado;
+                             }
+              }
+
+            }
+          return devolver;
+}
 
 
 

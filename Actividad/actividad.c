@@ -141,7 +141,7 @@ void anyadirActividad()
 
 	InsertActivity(nombre, dificultad, limite_per_min, limite_per_max, edad_min);
 
-	visualizarMenuActividades();
+	gestionarActividades();
  }
 
 void eliminarActividad()

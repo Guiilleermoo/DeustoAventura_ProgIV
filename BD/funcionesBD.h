@@ -29,5 +29,7 @@ void insertProvince(int cod_prov,char nombreProv[]);
 void DeleteReserve(int codReserva, int codActividad);
 
 void mensajeLog(char* msg,char* error);
-
+void cerrarBD();
+void iniciarBD();
+char* load_config(char* filename, char* buscar);
 #endif

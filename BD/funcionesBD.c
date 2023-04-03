@@ -6,6 +6,7 @@
 #include "../Cliente/cliente.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "../Reserva/reserva.h"
 
 void menuJefe();
 void menuEmpleado();
@@ -15,15 +16,15 @@ sqlite3 *db;
 sqlite3_stmt *stmt;
 int result;
 char* load_config(char* filename, char* buscar)
-{printf("sadsada");
+{
 
      FILE* archivo;
          char linea[100];
          char* igual;
          char buscar2[20];
-         char* devolver;
 
-          archivo = fopen("log.txt", "r");
+         char resultado[100];
+          archivo = fopen(filename, "r");
 
           if (archivo == NULL)
           {
@@ -47,23 +48,24 @@ char* load_config(char* filename, char* buscar)
               {
                   igual = strchr(linea, '=');
                   if (igual != NULL) {
-                	  char resultado[100];
+
                   strcpy(resultado, igual + 1);
                   printf("%s", resultado);
-                  devolver=resultado;
+                 // devolver=resultado;
                              }
               }
 
             }
 
-          return devolver;
+          return resultado;
 }
 
 void iniciarBD(){
-	printf("sadada");
+
 	char* ruta=load_config("conf.txt","ruta");
-	printf("%s",ruta);
-	sqlite3_open(ruta, &db);
+
+	sqlite3_open("DeustoAventura.db", &db);
+
 
 }
 void cerrarBD() {
@@ -103,6 +105,31 @@ void ShowActivities()
 
 	sqlite3_finalize(stmt);
 
+}
+Reserva findReserva(int cod_cliente, int cod_act, char* fecha){
+	Reserva reserva;
+
+
+	char sql[] = "select * from RESERVA where COD_CLTE = ? and COD_ACT = ? and FECHA_RES = ?";
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	sqlite3_bind_int(stmt, 0, cod_cliente);
+	sqlite3_bind_int(stmt, 1, cod_act);
+	sqlite3_bind_int(stmt, 2, fecha);
+
+
+	result = sqlite3_step(stmt) ;
+
+
+	reserva.codCliente = (int) sqlite3_column_int(stmt, 0);
+	reserva.codActividad = (int) sqlite3_column_int(stmt, 1);
+	reserva.fecha = (char *) sqlite3_column_text(stmt, 2);
+	reserva.cantPersonas = (int) sqlite3_column_int(stmt, 3);
+
+	sqlite3_finalize(stmt);
+
+
+	return reserva;
 }
 
 void ShowActivitiesInProvince(char provincia[])
@@ -282,14 +309,12 @@ void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* c
 
 		sqlite3_finalize(stmt);
 
-
 }
 
 void isWorker(char nombre[], char contrasena[]){
     Empleado emp;
 
 
-    iniciarBD();
 
     char sql[] = "select * from EMPLEADO where NOMBRE_EMP = ? and CONTRASENA = ?";
 
@@ -514,23 +539,26 @@ void insertOffer(int cod_park,int cod_act,int duracion)
 void newReserve(int cod_cliente,int cod_act,char fecha_res[],int cant_per)
 {
 
-	char sql[] = "insert into RESERVA (COD_CLTE, COD_ACT, FECHA_RES,CANT_PER,IMPORTE) values (?, ?, ?, ?, ?)";
-	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-	sqlite3_bind_int(stmt, 1, cod_cliente);
-	sqlite3_bind_int(stmt,2, cod_act);
-	sqlite3_bind_text(stmt,3, fecha_res,strlen(fecha_res), SQLITE_STATIC);
-	sqlite3_bind_int(stmt, 4, cant_per);
+		char sql[] = "insert into RESERVA (COD_CLTE, COD_ACT, FECHA_RES,CANT_PER) values (?, ?, ?, ?)";
+		sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-	result = sqlite3_step(stmt);
+		sqlite3_bind_int(stmt, 1, cod_cliente);
+		sqlite3_bind_int(stmt,2, cod_act);
+		sqlite3_bind_text(stmt,3, fecha_res,strlen(fecha_res), SQLITE_STATIC);
+		sqlite3_bind_int(stmt, 4, cant_per);
 
-	if (result != SQLITE_DONE)
-	{
-		printf("Error insertando Reserva\n");
-	} else
-	{
-		printf("Reserva insertada - >  CodCliente: %d - CodAct: %d - Fecha de la Reserva: %s - Numero de personas: %d\n", cod_cliente,cod_act,fecha_res,cant_per);
-	}
+		result = sqlite3_step(stmt);
+
+		if (result != SQLITE_DONE)
+		{
+			printf("Error insertando Reserva\n");
+		} else
+		{
+			printf("Reserva insertada - >  CodCliente: %d - CodAct: %d - Fecha de la Reserva: %s - Numero de personas: %d\n", cod_cliente,cod_act,fecha_res,cant_per);
+		}
+
+
 
 
 }

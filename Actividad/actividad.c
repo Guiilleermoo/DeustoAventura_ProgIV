@@ -16,7 +16,6 @@ void gestionarActividades(void)
     int a;
 
     scanf(" %d", &a);
-    printf("Se leyó el caracter: %d\n", a);
     fflush(stdout);
     if (a == 1)
     {
@@ -44,11 +43,21 @@ void visualizarMenuActividades(void)
    int a;
 
    scanf(" %d", &a);
-   printf("Se leyó el caracter: %d\n", a);
    fflush(stdout);
    if (a == 1)
    {
-	   visualizarTodas();
+	   ShowActivities();
+
+	   int b;
+
+		printf("0. Pulsa enter para volver\n");
+		fflush(stdout);
+		scanf(" %d", &b);
+
+		if (b == 0)
+		{
+			visualizarMenuActividades();
+		}
     } else if (a == 2)
     {
     	visualizarCiudad();
@@ -61,24 +70,6 @@ void visualizarMenuActividades(void)
     }
 }
 
-void visualizarTodas(void)
-{
-	int nActividades = 5;
-	int i, a;
-	printf("Lista de todas las actividades\n");
-
-	ShowActivities();
-
-	printf("0. Pulsa enter para volver\n");
-	fflush(stdout);
-	scanf(" %d", &a);
-
-	if (a == 0)
-	{
-		visualizarMenuActividades();
-	}
-}
-
 void visualizarCiudad(void)
 {
     char ciudad[20];
@@ -86,13 +77,9 @@ void visualizarCiudad(void)
     fflush(stdout);
     scanf(" %s", ciudad);
 
-    int nActividades = 5;
-    int i, a;
-    printf("Lista de todas las actividades de x\n");
-    for (i = 0; i < nActividades; ++i)
-    {
-      printf("	%i. Actividad\n", i);
-    }
+    ShowActivitiesInCommunity(ciudad);
+
+    int a;
 
     printf("0. Pulsa enter para volver\n");
     fflush(stdout);

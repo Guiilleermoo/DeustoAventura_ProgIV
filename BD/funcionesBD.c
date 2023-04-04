@@ -277,9 +277,6 @@ void ShowWorkers()
 
 }
 
-
-
-
 void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* correo, char *contrasena,char* estatus, int cod_park) {
 	   sqlite3 *db;
 	    char *error = 0;
@@ -357,7 +354,6 @@ void isWorker(char nombre[], char contrasena[]){
     		menuEmpleado();
     	} else {
     		sqlite3_finalize(stmt);
-    		sqlite3_close(db);
     		printf("Empleado no encontrado");
     		main();
     	}

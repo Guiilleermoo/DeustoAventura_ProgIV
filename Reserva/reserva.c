@@ -1,6 +1,10 @@
  #include "reserva.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "..\BD\funcionesBD.h"
+
+#define MAX_NAME_SZ 256
 
 void menuEmpleado();
 
@@ -65,7 +69,7 @@ void hacerReserva()
 	// falta por hacer
 	printf("Introduzca la comunidad donde desea realizar la actividad:\n");
 	fflush(stdout);
-	scanf(" %s", &comunidad);
+	scanf(" %[^\n]", &comunidad);
 	printf("Actividades que puedes realizar\n");
 		ShowActivitiesInProvince(&comunidad);
 	printf("Inserte el codigo de la actividad que deseas realizar:\n ");

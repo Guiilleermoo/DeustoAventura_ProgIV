@@ -15,57 +15,52 @@ void main();
 sqlite3 *db;
 sqlite3_stmt *stmt;
 int result;
-char* load_config(char* filename, char* buscar)
-{
+char* load_config(char* filename, char* buscar) {
+    FILE* archivo;
+    char linea[100];
+    char* igual;
+    char buscar2[20];
 
-     FILE* archivo;
-         char linea[100];
-         char* igual;
-         char buscar2[20];
+    archivo = fopen(filename, "r");
 
-         char resultado[100];
-          archivo = fopen(filename, "r");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return NULL;
+    }
 
-          if (archivo == NULL)
-          {
-             printf("Error al abrir el archivo.\n");
-             return buscar;
-           }
+    char* resultado = NULL;
+    while (fgets(linea, 100, archivo)) {
+        int i = 0;
+        while (linea[i] != '=') {
+            buscar2[i] = linea[i];
+            i++;
+        }
+        buscar2[i] = '\0';
 
-          while (fgets(linea, 100, archivo)) {
-
-                int i = 0;
-                while (linea[i] != '=')
-                {
-                    buscar2[i] = linea[i];
-                    i++;
-                   // printf("%c",linea[i]);
+        if (strcmp(buscar, buscar2) == 0) {
+            igual = strchr(linea, '=');
+            if (igual != NULL) {
+                int longitud = strlen(igual + 1);
+                resultado = (char*) realloc(resultado, longitud * sizeof(char));
+                if (resultado == NULL) {
+                    printf("Error al asignar memoria.\n");
+                    return NULL;
                 }
-                buscar2[i] = '\0';
-
-             //   printf("%s\n", buscar2);
-              if(strcmp(buscar, buscar2) == 0)
-              {
-                  igual = strchr(linea, '=');
-                  if (igual != NULL) {
-
-                  strcpy(resultado, igual + 1);
-               //   printf("%s", resultado);
-                 // devolver=resultado;
-                             }
-              }
-
+                strncpy(resultado, igual + 1, longitud);
+                resultado[longitud - 1] = '\0';
             }
+        }
+    }
 
-          return resultado;
+    fclose(archivo);
+    return resultado;
 }
-
 void iniciarBD(){
 
-	char* ruta=load_config("conf.txt","ruta");
+	char*ruta=load_config("conf.txt","ruta");
 
-	sqlite3_open("DeustoAventura.db", &db);
-
+	sqlite3_open(ruta, &db);
+	free(ruta);
 
 }
 void cerrarBD() {
@@ -184,26 +179,48 @@ void showActivitiesByDifficulty(char dificultad[])
 
 void InsertActivity(char nombre[], char dificultad[], int per_min, int per_max, int edad_min)
 {
-	sqlite3 *db;
-	char *error = 0;
-	int rc;
 
+	char sql[] = "INSERT INTO ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX,  EDAD_MIN) VALUES (?, ?, ?, ?, ?)";
+	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
-    char query[400];
-    sprintf(query, "INSERT INTO ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX,  EDAD_MIN) VALUES ('%s', '%s', %d, '%d', '%d')", nombre, dificultad, per_min, per_max, edad_min);
+	sqlite3_bind_text(stmt,1, nombre, strlen(nombre), SQLITE_STATIC);
+	sqlite3_bind_text(stmt,2, dificultad, strlen(dificultad), SQLITE_STATIC);
+	sqlite3_bind_int(stmt, 3, per_min);
+	sqlite3_bind_int(stmt, 4, per_max);
+	sqlite3_bind_int(stmt, 5, edad_min);
 
-	rc = sqlite3_exec(db, query, 0, 0, &error);
-
-	mensajeLog("Insertando actividad",error);
-	if (rc == SQLITE_OK)
-	{
-		printf("Actividad insertada correctamente\n\n");
-	} else
-	{
-		printf("Error al insertar actividad: %s\n", error);
+	result = sqlite3_step(stmt);
+	if (result != SQLITE_DONE) {
+		printf("Error insertando el actividad\n");
+	}else{
+		printf("Actividad insertada ");
 	}
 
 	sqlite3_finalize(stmt);
+
+
+
+
+//	sqlite3 *db;
+//	char *error = 0;
+//	int rc;
+//
+//
+//    char query[400];
+//    sprintf(query, "INSERT INTO ACTIVIDAD (NOMBRE_ACT, DIFICULTAD, LIMITE_PER_MIN, LIMITE_PER_MAX,  EDAD_MIN) VALUES ('%s', '%s', %d, '%d', '%d')", nombre, dificultad, per_min, per_max, edad_min);
+//
+//	rc = sqlite3_exec(db, query, 0, 0, &error);
+//
+//	mensajeLog("Insertando actividad",error);
+//	if (rc == SQLITE_OK)
+//	{
+//		printf("Actividad insertada correctamente\n\n");
+//	} else
+//	{
+//		printf("Error al insertar actividad: %s\n", error);
+//	}
+//
+//	sqlite3_finalize(stmt);
 
 }
 
@@ -278,9 +295,6 @@ void ShowWorkers()
 }
 
 void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* correo, char *contrasena,char* estatus, int cod_park) {
-	   //sqlite3 *db;
-	    char *error = 0;
-	    int rc;
 
 
 	    char sql[] = "INSERT INTO EMPLEADO ( DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO,  CONTRASENA, ESTATUS, COD_PARK) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -307,25 +321,6 @@ void InsertWorker(char* dni, char *nombre, char *apellido, int telefono, char* c
 
 
 
-//	    if (rc == SQLITE_OK) {
-//
-//
-//	        char query[400];
-//	        sprintf(query, "INSERT INTO EMPLEADO ( DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO,  CONTRASENA, ESTATUS, COD_PARK) VALUES ('%s', '%s', '%s', %d, '%s', '%s', '%s', %d)", dni, nombre, apellido, telefono, correo, contrasena, estatus, cod_park);
-//
-//	        rc = sqlite3_exec(db, query, 0, 0, &error);
-//
-//
-//
-//	        mensajeLog("Insertar trabajador", error);
-//	        if (rc == SQLITE_OK) {
-//	            printf("Trabajador insertado correctamente\n\n");
-//	        } else {
-//	            printf("Error al insertar trabajador: %s\n", error);
-//	        }
-//	    } else {
-//	        printf("Error al conectar a la base de datos: %s\n", sqlite3_errmsg(db));
-//	    }
 
 		sqlite3_finalize(stmt);
 

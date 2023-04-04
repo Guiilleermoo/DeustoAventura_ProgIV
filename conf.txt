@@ -1,2 +1,2 @@
-ruta=DeustoAventura.bd
+ruta=DeustoAventura.db
 salida=Reserva.txt

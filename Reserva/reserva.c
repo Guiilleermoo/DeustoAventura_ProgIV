@@ -4,30 +4,36 @@
 
 void menuEmpleado();
 
-void visualizarUnaReserva(){
-	int cod_cliente, cod_act;
-	char* fecha;
+void visualizarReservasCliente(){
+	int cod_cliente, b;
 	printf("Introduce el codigo del cliente:");
 	fflush(stdout);
 	scanf(" %d", &cod_cliente);
 
-	printf("Introduce el codigo de la actividad:");
-	fflush(stdout);
-	scanf(" %d", &cod_act);
+	ShowReservesClient(cod_cliente);
 
-	printf("Introduce la fecha de la reserva:");
+	printf("0. Pulsa enter para volver\n");
 	fflush(stdout);
-	scanf(" %s", &fecha);
-	Reserva reserva;
+	scanf(" %d", &b);
 
-	reserva = findReserva(cod_cliente, cod_act, &fecha);
-	Cliente c = findClient(reserva.codCliente);
-	Actividad a = findActivity(reserva.codActividad);
-	printf("DNI: %s Nombre:%s Apellido: %s Telefono: %i Correo: %s Actividad: %s Numeros de personas: %i Fecha: %s:",c.dni,c.nombre,c.apellido,c.telefono, c.mail, a.nombre_act, reserva.cantPersonas, reserva.fecha);
+	if (b == 0)
+	{
+		menuEmpleado();
+	}
 }
 
 void visualizarReservas(){
 	ShowReserves();
+	int b;
+
+	printf("0. Pulsa enter para volver\n");
+	fflush(stdout);
+	scanf(" %d", &b);
+
+	if (b == 0)
+	{
+		menuEmpleado();
+	}
 }
 
 void hacerReserva()
@@ -37,7 +43,7 @@ void hacerReserva()
 	 char fecha[20];
 	 int codActividad;
 	 char comunidad;
-	 char confirmar;
+	 //char confirmar;
 	printf("Hacer Reserva\n");
 	printf("Introduzca el DNI\n");
 	fflush(stdout);

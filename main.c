@@ -72,7 +72,7 @@ void menuEmpleado()
 	    printf("1. Hacer una reserva\n");
 	    printf("2. Cancelar una reserva\n");
 	    printf("3. Visualizar todas las reservas\n");
-	    printf("4. Visualizar una reserva\n");
+	    printf("4. Visualizar reservas de un cliente\n");
 	    printf("5. Visualizar actividades\n");
 	    printf("0. Salir\n");
 	    printf("Elija su opcion:  ");
@@ -92,7 +92,7 @@ void menuEmpleado()
 	    	visualizarReservas();
 	     } else if (a == 4)
 	     {
-	    	visualizarUnaReserva();
+	    	visualizarReservasCliente();
 	     } else if (a == 5)
 	     {
 	    	 visualizarMenuActividades();

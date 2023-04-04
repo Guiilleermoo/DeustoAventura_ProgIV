@@ -321,42 +321,51 @@ void isWorker(char nombre[], char contrasena[]){
 
     result = sqlite3_step(stmt);
 
-    emp.DNI = (char*) sqlite3_column_text(stmt, 1);
-    emp.nombre = (char*) sqlite3_column_text(stmt, 2);
-    emp.apellido = (char*) sqlite3_column_text(stmt, 3);
-    emp.tfno = (int) sqlite3_column_int(stmt, 4);
-    emp.correo = (char*) sqlite3_column_text(stmt, 5);
-    emp.contrasena = (char*) sqlite3_column_text(stmt, 6);
-    emp.estatus = (char*) sqlite3_column_text(stmt, 7);
-    emp.cod_park = (int) sqlite3_column_text(stmt, 8);
+    int existe;
 
-    if(emp.estatus[0] == 'J')
-    	{
-    		printf("Se ha iniciado sesion como JEFE con el nombre:  ");
-    		puts(nombre);
+    if (result == 100){
+    	existe = 1;
+		emp.DNI = (char*) sqlite3_column_text(stmt, 1);
+		emp.nombre = (char*) sqlite3_column_text(stmt, 2);
+		emp.apellido = (char*) sqlite3_column_text(stmt, 3);
+		emp.tfno = (int) sqlite3_column_int(stmt, 4);
+		emp.correo = (char*) sqlite3_column_text(stmt, 5);
+		emp.contrasena = (char*) sqlite3_column_text(stmt, 6);
+		emp.estatus = (char*) sqlite3_column_text(stmt, 7);
+		emp.cod_park = (int) sqlite3_column_text(stmt, 8);
+    } else if (result == 101){
+    	existe = 0;
+    }
+    if (existe == 1){
+    	if(emp.estatus[0] == 'J')
+		{
+			printf("Se ha iniciado sesion como JEFE con el nombre:  ");
+			puts(nombre);
 
-    		printf("\n");
+			printf("\n");
 
-    		sqlite3_finalize(stmt);
-
-
-    		menuJefe();
-    	} else if(emp.estatus[0] == 'E'){
-    		printf("Se ha iniciado sesion como EMPLEADO con el alias ");
-    		puts(nombre);
-
-    		printf("\n");
-
-    		sqlite3_finalize(stmt);
+			sqlite3_finalize(stmt);
 
 
+			menuJefe();
+		} else if(emp.estatus[0] == 'E'){
+			printf("Se ha iniciado sesion como EMPLEADO con el alias ");
+			puts(nombre);
 
-    		menuEmpleado();
-    	} else {
-    		sqlite3_finalize(stmt);
-    		printf("Empleado no encontrado");
-    		main();
-    	}
+			printf("\n");
+
+			sqlite3_finalize(stmt);
+
+
+
+			menuEmpleado();
+		}
+    }else if (existe == 0){
+    	sqlite3_finalize(stmt);
+		printf("Empleado no encontrado\n");
+		main();
+    }
+
     cerrarBD();
 }
 
@@ -566,6 +575,32 @@ void ShowReserves()
 	char sql[] = "select * from RESERVA";
 
 	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+
+	printf("\n");
+	printf("Mostrando reservas:\n");
+
+	do {
+		result = sqlite3_step(stmt) ;
+		if (result == SQLITE_ROW) {
+			printf("Codigo del Cliente: %d - Codigo Actividad: %d - Fecha de la reserva: %s - Numero de personas: %i - Importe: %i\n", (int) sqlite3_column_int(stmt, 0), (int) sqlite3_column_int(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_int(stmt, 3), (int) sqlite3_column_int(stmt, 4));
+		}
+	} while (result == SQLITE_ROW);
+
+	printf("\n");
+
+	sqlite3_finalize(stmt);
+
+
+}
+
+void ShowReservesClient(int cod_cl)
+{
+
+
+	char sql[] = "select * from RESERVA where COD_CLTE = ?";
+
+	sqlite3_prepare_v2(db, sql, strlen(sql), &stmt, NULL) ;
+	sqlite3_bind_int(stmt, 1, cod_cl);
 
 	printf("\n");
 	printf("Mostrando reservas:\n");

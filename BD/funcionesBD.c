@@ -50,7 +50,7 @@ char* load_config(char* filename, char* buscar)
                   if (igual != NULL) {
 
                   strcpy(resultado, igual + 1);
-                  printf("%s", resultado);
+               //   printf("%s", resultado);
                  // devolver=resultado;
                              }
               }

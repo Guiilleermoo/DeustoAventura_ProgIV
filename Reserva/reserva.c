@@ -42,67 +42,60 @@ void visualizarReservas(){
 
 void hacerReserva()
 {
-	 char dni[9], nombre[20], apellido[20], correo[20], telefono[9];
-	 int numPersonas;
+	char dni[9];
 	 char fecha[20];
-	 int codActividad;
-	 char comunidad;
-	 //char confirmar;
+	 int numPersonas, codActividad;
+	 char provincia[20];
+
 	printf("Hacer Reserva\n");
-	printf("Introduzca el DNI\n");
+	printf("Introduzca el DNI:  ");
 	fflush(stdout);
 	scanf(" %s", dni);
-	printf("Introduzca el nombre\n");
-	fflush(stdout);
-	scanf(" %s", nombre);
-	printf("Introduzca el apellido\n");
-	fflush(stdout);
-	scanf(" %s", apellido);
-	printf("Introduzca el numero de telefono\n");
-	fflush(stdout);
-	scanf(" %s", telefono);
-	printf("Introduzca el correo\n");
-	fflush(stdout);
-	scanf(" %s", correo);
 
+	if(isClient(dni) == 0)
+	{
+		char nombre[20], apellido[20], correo[20], contra[20];
+		int cod_ciu, telefono;
+		printf("Introduzca el nombre:  ");
+		fflush(stdout);
+		scanf(" %s", nombre);
+		printf("Introduzca el apellido:   ");
+		fflush(stdout);
+		scanf(" %s", apellido);
+		printf("Introduzca el numero de telefono:  ");
+		fflush(stdout);
+		scanf(" %i", &telefono);
+		printf("Introduzca el correo:   ");
+		fflush(stdout);
+		scanf(" %s", correo);
+		printf("Introduzca la contraseña:   ");
+		fflush(stdout);
+		scanf(" %s", contra);
+		printf("Introduzca el codigo de la ciudad:   ");
+		fflush(stdout);
+		scanf(" %d", &cod_ciu);
 
-	// falta por hacer
-	printf("Introduzca la comunidad donde desea realizar la actividad:\n");
-	fflush(stdout);
-	scanf(" %[^\n]", &comunidad);
-	printf("Actividades que puedes realizar\n");
-		ShowActivitiesInProvince(&comunidad);
-	printf("Inserte el codigo de la actividad que deseas realizar:\n ");
-	fflush(stdout);
-		scanf(" %d", &codActividad);
+		newClient(dni, nombre, apellido, telefono, correo, contra, cod_ciu);
+	}
 
-
-	printf("Introduza el numero de personas que van a realizar la activiad:\n");
+	printf("Introduzca la comunidad donde desea realizar la actividad:  ");
 	fflush(stdout);
-	scanf(" %i", &numPersonas);
-	printf("Introduza la fecha en la que quires realizar la actividad(DD/MM/AAAA):\n");
+	scanf(" %s", provincia);
+	ShowActivitiesInProvince(provincia);
+	printf("Inserte el codigo de la actividad que deseas realizar:   ");
+	fflush(stdout);
+	scanf(" %d", &codActividad);
+	printf("Introduza el numero de personas que van a realizar la activiad:  ");
+	fflush(stdout);
+	scanf(" %d", &numPersonas);
+	printf("Introduza la fecha en la que quires realizar la actividad(DD/MM/AAAA):  ");
 	fflush(stdout);
 	scanf(" %s", fecha);
 
-//	printf("Confirmar cancelacion de reserva(S/N):\n");
-//	fflush(stdout);
-//	scanf(" %c", &confirmar);
-	//LAMAR FUNCION QUE METE LA RESERVA
-	int c = findClienDNI(dni);
-	Actividad a = findActivity(codActividad);
+	int c = findClientDNI(dni);
+
 	newReserve(c, codActividad, fecha, numPersonas);
 
-//	printf("LLEGA AQUI");
-//	if(confirmar == 's'){
-//		printf("Entra aqui");
-//		int c = findClienDNI(dni);
-//		Actividad a = findActivity(codActividad);
-//
-//		newReserve(c, codActividad, fecha, numPersonas);
-//
-//		}else{
-//			printf("Fue cancelada la reserva\n");
-//		}
 	printf("\n\n");
 	menuEmpleado();
 
@@ -121,7 +114,7 @@ void cancelarReserva()
 	printf("2.¿Id del actividad que quiere cancelar la reserva?\n");
 	fflush(stdout);
 	scanf("%d",&idactividad);
-	printf("Confirmar cancelacion de reserva(S/N):\n");
+	printf("Confirmar cancelacion de reserva(s/n):\n");
 	fflush(stdout);
 	scanf(" %c", &confirmar);
 	if(confirmar == 's'){

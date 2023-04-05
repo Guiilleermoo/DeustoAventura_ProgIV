@@ -341,7 +341,7 @@ void isWorker(char nombre[], char contrasena[]){
 		main();
     }
 
-    cerrarBD();
+   // cerrarBD();
 }
 
 
@@ -368,7 +368,7 @@ void DeleteWorker(char* dni)
 void newClient(char dni[],char nombre[],char apellido[], int tfno,char correo[],char contrasena[],int cod_ciu){
 
 
-	char sql[] = "insert into CLIENTE (DNI, NOMBRE_EMP, APELLIDO_EMP, TFNO, CORREO, CONTRASENA, COD_CIU) values (?, ?, ?, ?, ?, ?, ?)";
+	char sql[] = "insert into CLIENTE (DNI, NOMBRE_CLTE, APELLIDO_CLTE, TFNO, CORREO, CONTRASENA, COD_CIU) values (?, ?, ?, ?, ?, ?, ?)";
 	sqlite3_prepare_v2(db, sql, strlen(sql) + 1, &stmt, NULL) ;
 
 		sqlite3_bind_text(stmt, 1, dni, strlen(dni), SQLITE_STATIC);
@@ -388,7 +388,7 @@ void newClient(char dni[],char nombre[],char apellido[], int tfno,char correo[],
 
 		sqlite3_finalize(stmt);
 
-		cerrarBD();
+	//	cerrarBD();
 }
 
 Cliente findClient(int codCliente)
@@ -450,7 +450,7 @@ int isClient(char* dni)
 
 	sqlite3_finalize(stmt);
 
-	cerrarBD();
+	//cerrarBD();
 
 	return existe;
 

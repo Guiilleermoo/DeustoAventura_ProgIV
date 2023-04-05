@@ -25,7 +25,7 @@ int main(void)
 	// Libera la memoria dinámica
 
 	//void iniciarBD();
-	 iniciarBD();
+	iniciarBD();
 	printf("GESTION DE DEUSTOAVENTURA\n\n");
 	printf("1. Iniciar sesion\n");
 	printf("0. Salir\n");
@@ -44,7 +44,7 @@ int main(void)
 		exit (-1);
 		cerrarBD();
 	}
-    cerrarBD();
+   // cerrarBD();
 
     return 0;
 }

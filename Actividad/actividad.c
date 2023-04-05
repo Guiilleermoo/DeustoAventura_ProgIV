@@ -5,8 +5,10 @@
 
 void menuJefe();
 
-void gestionarActividades()
+void gestionarActividades(int i)
 {
+	int k=0;
+	k=i;
     printf("MENU ACTIVIDADES\n");
     printf("1. Visualizar actividades\n");
     printf("2. Añadir actividad\n");
@@ -30,11 +32,16 @@ void gestionarActividades()
     	eliminarActividad();
     } else if (a == 0)
     {
-    	menuJefe();
+    	if(k ==1){
+    		menuEmpleado();
+    	}else{
+    		menuJefe();
+    	}
+
     }
 }
 
-void visualizarMenuActividades()
+void visualizarMenuActividades(int i)
 {
    printf("VER ACTIVIDADES\n");
    printf("1. Visualizar todas actividades\n");
@@ -60,7 +67,7 @@ void visualizarMenuActividades()
 
 		if (b == 0)
 		{
-			visualizarMenuActividades();
+			visualizarMenuActividades( i);
 		}
     } else if (a == 2)
     {
@@ -70,11 +77,11 @@ void visualizarMenuActividades()
     	visualizarDificultad();
     } else if (a == 0)
     {
-    	gestionarActividades();
+    	gestionarActividades(i);
     }
 }
 
-void visualizarProvincia()
+void visualizarProvincia(int i)
 {
     char provincia[20];
     printf("Que provincia desea consultar:  ");
@@ -91,11 +98,11 @@ void visualizarProvincia()
 
     if (a == 0)
     {
-    	visualizarMenuActividades();
+    	visualizarMenuActividades(i);
     }
 }
 
-void visualizarDificultad()
+void visualizarDificultad(int i)
 {
 	char dificultad[6];
     printf("Que nivel de dificultad desea consultar(Baja/Media/Alta):   ");
@@ -112,11 +119,11 @@ void visualizarDificultad()
 
     if (a == 0)
     {
-    	visualizarMenuActividades();
+    	visualizarMenuActividades(i);
      }
 }
 
-void anyadirActividad()
+void anyadirActividad(int i)
 {
 	char nombre[20];
 	char dificultad[6];
@@ -141,10 +148,10 @@ void anyadirActividad()
 
 	InsertActivity(nombre, dificultad, limite_per_min, limite_per_max, edad_min);
 
-	gestionarActividades();
+	gestionarActividades(i);
  }
 
-void eliminarActividad()
+void eliminarActividad(int i)
 {
 	int codigo;
 	char confirmacion;
@@ -161,10 +168,10 @@ void eliminarActividad()
 	if (confirmacion == 's')
 	{
 		DeleteActivity(codigo);
-	    gestionarActividades();
+	    gestionarActividades(i);
 	} else
 	{
 	   printf("La actividad no ha sido eliminada\n");
-	   gestionarActividades();
+	   gestionarActividades(i);
 	}
 }

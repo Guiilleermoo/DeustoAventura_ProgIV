@@ -18,13 +18,7 @@ void menuJefe();
 
 int main(void)
 {
-//    char *filename="";
-//    ReadCsvData(filename);           // Leer datos csv
-//    ShowCsvData();                   // Muestra los datos csv leídos a través de la consola
-//    FreeCsvData();
-	// Libera la memoria dinámica
 
-	//void iniciarBD();
 	iniciarBD();
 	printf("GESTION DE DEUSTOAVENTURA\n\n");
 	printf("1. Iniciar sesion\n");
@@ -95,7 +89,7 @@ void menuEmpleado()
 	    	visualizarReservasCliente();
 	     } else if (a == 5)
 	     {
-	    	 visualizarMenuActividades();
+	    	 visualizarMenuActividades(1);
 	     } else if (a == 0)
 	     {
 	    	 main();

@@ -13,10 +13,7 @@ void inicioSesion();
 void menuEmpleado();
 void menuJefe();
 
-
-
-
-int main(void)
+int main()
 {
 //    char *filename="";
 //    ReadCsvData(filename);           // Leer datos csv
@@ -61,7 +58,6 @@ void inicioSesion(void)
 	fflush(stdout);
 	printf("\n");
 	scanf(" %s", contra);
-
 
 	isWorker(nombre, contra);
 }
@@ -127,22 +123,3 @@ void menuJefe(void)
 		main();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

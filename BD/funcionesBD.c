@@ -140,7 +140,7 @@ void ShowActivitiesInProvince(char provincia[])
 	do {
 		result = sqlite3_step(stmt) ;
 		if (result == SQLITE_ROW) {
-			printf("Cod Act: %d Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (int) sqlite3_column_int(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_text(stmt, 3), (int) sqlite3_column_text(stmt, 4), (int) sqlite3_column_text(stmt, 5));
+			printf("Cod Act: %i - Nombre: %s - Dificultad: %s - Per_Min: %i - Per_Max: %i - Edad_Min: %i\n", (int) sqlite3_column_int(stmt, 0), (char*) sqlite3_column_text(stmt, 1), (char*) sqlite3_column_text(stmt, 2), (int) sqlite3_column_int(stmt, 3), (int) sqlite3_column_int(stmt, 4), (int) sqlite3_column_int(stmt, 5));
 		}
 	} while (result == SQLITE_ROW);
 	printf("\n");
@@ -330,8 +330,6 @@ void isWorker(char nombre[], char contrasena[]){
 			printf("\n");
 
 			sqlite3_finalize(stmt);
-
-
 
 			menuEmpleado();
 		}

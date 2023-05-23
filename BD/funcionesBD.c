@@ -60,7 +60,8 @@ char* load_config(char* filename, char* buscar)
 void iniciarBD()
 {
 	char*ruta=load_config("conf.txt","ruta");
-
+	printf("%s",ruta);
+	printf("\n");
 	sqlite3_open(ruta, &db);
 	free(ruta);
 
